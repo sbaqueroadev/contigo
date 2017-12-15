@@ -3,8 +3,8 @@ package co.com.sbaqueroadev.contigo.services;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import co.com.sbaqueroadev.contigo.dao.implementation.ApplicationUserRepository;
-import co.com.sbaqueroadev.contigo.dao.implementation.RoleRepository;
+import co.com.sbaqueroadev.contigo.dao.ApplicationUserRepository;
+import co.com.sbaqueroadev.contigo.dao.RoleRepository;
 import co.com.sbaqueroadev.contigo.exceptions.UsernameExistsException;
 import co.com.sbaqueroadev.contigo.model.ApplicationUserInterface;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;

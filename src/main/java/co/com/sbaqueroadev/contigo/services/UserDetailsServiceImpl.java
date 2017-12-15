@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import co.com.sbaqueroadev.contigo.dao.implementation.ApplicationUserRepository;
+import co.com.sbaqueroadev.contigo.dao.ApplicationUserRepository;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege;
 import co.com.sbaqueroadev.contigo.model.implementation.Role;

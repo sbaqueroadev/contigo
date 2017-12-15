@@ -13,9 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.com.sbaqueroadev.contigo.dao.implementation.ApplicationUserRepository;
-import co.com.sbaqueroadev.contigo.dao.implementation.PrivilegeRepository;
-import co.com.sbaqueroadev.contigo.dao.implementation.RoleRepository;
+import co.com.sbaqueroadev.contigo.dao.ApplicationUserRepository;
+import co.com.sbaqueroadev.contigo.dao.PrivilegeRepository;
+import co.com.sbaqueroadev.contigo.dao.RoleRepository;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege;
 import co.com.sbaqueroadev.contigo.model.implementation.Role;
