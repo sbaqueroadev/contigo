@@ -11,36 +11,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="role")
+
+@Document(collection="role")
 public class Role {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    @OneToMany(mappedBy="role",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-    private Collection<ApplicationUser> users;
- 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "roles_privileges", 
-        joinColumns = @JoinColumn(
-          name = "role_id", referencedColumnName = "id"), 
-        inverseJoinColumns = @JoinColumn(
-          name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Privilege> privileges;
-    
-    
-    
-    public Role() {
+	private String id;
+	private String name;
+	private Collection<ApplicationUser> users;
+
+	private Collection<Privilege> privileges;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Role() {
 		super();
 	}
 
@@ -71,7 +65,7 @@ public class Role {
 	public void setPrivileges(Collection<Privilege> privileges) {
 		this.privileges = privileges;
 	}
-    
-    
+
+
 
 }

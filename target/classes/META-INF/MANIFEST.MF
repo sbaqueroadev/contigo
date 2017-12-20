@@ -4,8 +4,8 @@ Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: gasdsba
 Implementation-Vendor-Id: co.com.sbaqueroadev
 Build-Jdk: 1.8.0_151
-Implementation-URL: http://maven.apache.org
+Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-
+ starter-parent/contigo/
 Created-By: Maven Integration for Eclipse
-Implementation-Vendor: Pivotal Software, Inc.
 Main-Class: co.com.sbaqueroa.contigo.ContigoApplication
 

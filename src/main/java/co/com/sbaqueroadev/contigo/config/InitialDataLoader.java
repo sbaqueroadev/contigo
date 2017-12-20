@@ -1,4 +1,4 @@
-package co.com.sbaqueroadev.contigo;
+package co.com.sbaqueroadev.contigo.config;
 
 
 
