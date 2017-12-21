@@ -12,8 +12,8 @@ import org.webjars.RequireJS;
 @Controller
 public class ChatController {
 	
-	@MessageMapping("/write")
-	@SendTo("/topic/reading")
+	@MessageMapping("/write/{classId}")
+	@SendTo("/topic/reading/{classId}")
 	public String gettingData(String data) throws Exception{
 		return data;
 	}
