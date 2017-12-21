@@ -46,5 +46,13 @@ public class ApplicationUserServiceImpl implements ApplicationUserInterface {
 		}
 	}
 
+	/**
+	 * @param userName
+	 * @return The Application User
+	 */
+	public ApplicationUser findByUserName(String userName) {
+		return applicationUserRepository.findByUsername(userName);
+	}
+
 	
 }

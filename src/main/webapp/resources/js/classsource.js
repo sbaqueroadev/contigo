@@ -20,7 +20,7 @@ classApp.controller('boardController',function($scope){
         $scope.stompClient.connect({}, function (frame) {
             //setConnected(true);
             console.log('Connected: ' + frame);
-            $scope.stompClient.subscribe('/topic/updatingBoard', function (data) {
+            $scope.stompClient.subscribe('/topic/updatingBoard/'+classId, function (data) {
               console.log(data.body);
               data = JSON.parse(data.body);
               switch(data.type){
@@ -55,7 +55,7 @@ classApp.controller('boardController',function($scope){
     };
 
     $scope.sendInfo = function(data) {
-        $scope.stompClient.send("/board/boardUpdate", {}, JSON.stringify(data));
+        $scope.stompClient.send("/board/boardUpdate/"+classId, {}, JSON.stringify(data));
     };
 
     
@@ -92,7 +92,8 @@ classApp.controller('boardController',function($scope){
 
     $scope.sendCanvas = function(e) {
       $scope.isDrawing = false;
-      var dataURL = {type:'line',color:$scope.getColor(),width:$scope.getlineWidth(),points:$scope.points};
+      var dataURL = {type:'line',color:$scope.getColor(),width:$scope.getlineWidth(),
+    		  points:$scope.points};
       $scope.sendInfo(dataURL);
       $scope.points = [];
     }
@@ -154,12 +155,12 @@ classApp.controller('videoController',function($scope){
 
   $scope.pageReady = function () {
       $scope.uuid = $scope.uuidF();
-      $scope.sockjsVideo = new SockJS('http://localhost:8081/Contigo/show');
+      $scope.sockjsVideo = new SockJS('http://localhost:8081/Contigo/show/');
       $scope.serverConnection = Stomp.over($scope.sockjsVideo);//new WebSocket('wss://' + window.location.hostname + ':8081');
       $scope.serverConnection.connect({}, function (frame) {
           //setConnected(true);
           console.log('Connected: ' + frame);
-          $scope.serverConnection.subscribe('/topic/view', function (data) {
+          $scope.serverConnection.subscribe('/topic/view/'+classId, function (data) {
              gotMessageFromServer(data.body);
           });
       });
@@ -170,7 +171,8 @@ classApp.controller('videoController',function($scope){
       };
 
       if(navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices.getUserMedia($scope.constraints).then($scope.getUserMediaSuccess).catch($scope.errorHandler);
+          navigator.mediaDevices.getUserMedia($scope.constraints).then($scope.getUserMediaSuccess)
+          .catch($scope.errorHandler);
       } else {
           alert('Your browser does not support getUserMedia API');
       }
@@ -189,7 +191,8 @@ classApp.controller('videoController',function($scope){
       $scope.peerConnection.addStream($scope.localStream);
 
       if(isCaller) {
-          $scope.peerConnection.createOffer().then($scope.createdDescription).catch($scope.errorHandler);
+          $scope.peerConnection.createOffer().then($scope.createdDescription)
+          .catch($scope.errorHandler);
       }
   };
 
@@ -205,17 +208,20 @@ classApp.controller('videoController',function($scope){
           $scope.peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp)).then(function() {
               // Only create answers in response to offers
               if(signal.sdp.type == 'offer') {
-                  $scope.peerConnection.createAnswer().then($scope.createdDescription).catch($scope.errorHandler);
+                  $scope.peerConnection.createAnswer().then($scope.createdDescription)
+                  .catch($scope.errorHandler);
               }
           }).catch($scope.errorHandler);
       } else if(signal.ice) {
-          $scope.peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice)).catch($scope.errorHandler);
+          $scope.peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
+          .catch($scope.errorHandler);
       }
   };
 
   $scope.gotIceCandidate = function(event) {
       if(event.candidate != null) {
-          $scope.serverConnection.send("/video/show", {},JSON.stringify({'ice': event.candidate, 'uuid': $scope.uuid}));
+          $scope.serverConnection.send("/video/show/"+classId,
+        		  {},JSON.stringify({'ice': event.candidate, 'uuid': $scope.uuid}));
       }
   };
 
@@ -223,7 +229,10 @@ classApp.controller('videoController',function($scope){
       console.log('got description');
 
       $scope.peerConnection.setLocalDescription(description).then(function() {
-          $scope.serverConnection.send("/video/show", {},JSON.stringify({'sdp': $scope.peerConnection.localDescription, 'uuid': $scope.uuid}));
+          $scope.serverConnection.send("/video/show/"+classId,
+        		  {},JSON.stringify({'sdp': $scope.peerConnection.localDescription,
+        			  'uuid': $scope.uuid}));
+        		  
       }).catch($scope.errorHandler);
   };
 
@@ -267,7 +276,9 @@ classApp.controller('chatController',function($scope){
 
   $scope.stompClient = null;
   $scope.chatViewStatus = 0;
-  $scope.messages = [{msg: "Buenas tardes",sender:'student'},{msg: "Buenas tardes Sergio",sender:'teacher'},{msg: "En qué le puedo ayudar?",sender:'teacher'}];
+  $scope.messages = [{msg: "Buenas tardes",sender:'student'},
+	  {msg: "Buenas tardes Sergio",sender:'teacher'},
+	  {msg: "En qué le puedo ayudar?",sender:'teacher'}];
   $scope.openCloseChat = function(){
     var aux = $scope.chatViewStatus;
     var newRightPost = $scope.chatViewStatus==0?0:-400;
@@ -287,12 +298,12 @@ classApp.controller('chatController',function($scope){
   };
 
   $scope.connect = function() {
-      var socket = new SockJS('http://localhost:8081/Contigo/write');
+      var socket = new SockJS('http://localhost:8081/Contigo/write/');
       $scope.stompClient = Stomp.over(socket);
       $scope.stompClient.connect({}, function (frame) {
           //setConnected(true);
           console.log('Connected: ' + frame);
-          $scope.stompClient.subscribe('/topic/reading', function (data) {
+          $scope.stompClient.subscribe('/topic/reading/'+classId, function (data) {
              console.log(data.body);
              $scope.updateMessages(data.body);
           });
@@ -315,7 +326,8 @@ classApp.controller('chatController',function($scope){
   $scope.sendMessage = function() {
       if($scope.newMessage)
         if($scope.newMessage!=null && $scope.newMessage!="")
-          $scope.stompClient.send("/chat/write", {}, JSON.stringify({msg: ""+$scope.newMessage,sender:''+globalRole+''}));
+          $scope.stompClient.send("/chat/write/"+classId,
+        		  {}, JSON.stringify({msg: ""+$scope.newMessage,sender:''+globalRole+''}));
       $scope.newMessage = "";
   }
 
