@@ -1,36 +1,37 @@
 /**
  * Asset adding Angular App
  */
-var loginApp = angular.module("loginApp", []);
+/*var loginApp = angular.module("loginApp", []);
 
 /************************ LIST CONTROLLER****************************************/
-loginApp.controller("loginController", ['$scope','$q','$http','$window',function($scope,$q,$http, $window) {
+/*loginApp.controller("loginController", ['$scope','$q','$http','$window',function($scope,$q,$http, $window) {
 	$scope.asset = {};
 	/************************ SEND DATA PROCESS****************************************/
-	$scope.login = function(e){
-		e.preventDefault();
-		loginFinish().then(function(result){});
+	/*$scope.login = function(e){
+		//e.preventDefault();
+		//loginFinish().then(function(result){});
 		return false;
 	};
 	/********************************************************************************/
 	/************************ SEND NEW ASSET****************************************/
-	function loginFinish(){
+	/*function loginFinish(){
 		var deferred = $q.defer();
 		var data = $scope.user;
 		$http.post("../login",JSON.stringify(data))
-		.then(function success(response){
+		.then(function complete(response){
 			/*if(response.data.result=="OK"){
 				$scope.asset={};
 				$("#addAssetForm").trigger("reset");*/
-				alert("Login correctly!");
-				$window.location.href = '../board/home';
-			/*}else
+		/*		alert("Login correctly!");
+				console.log(response.data);
+				$window.location.href = response.headers('Location');
+			*//*}else
 				alert("Error. Try later please.");*/
-			deferred.resolve(response.data);
+		/*	deferred.resolve(response.data);
 		},
-		function error(response){
-			if(response.status=403){
-				$window.location.href = '../users/access';
+		function error(response){*/
+	/*		if(response.status=302){
+				$window.location.href = response.location;
 				//$location.path('../users/access');
 			}
 			deferred.resolve();//[{id:1,name:"P1"}]);
@@ -38,5 +39,5 @@ loginApp.controller("loginController", ['$scope','$q','$http','$window',function
 		return deferred.promise;
 	}
 	/********************************************************************************/
-}]);
+/*}]);
 /********************************************************************************/

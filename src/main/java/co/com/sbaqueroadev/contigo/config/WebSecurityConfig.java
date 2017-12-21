@@ -10,11 +10,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.savedrequest.NullRequestCache;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
+import co.com.sbaqueroadev.contigo.security.CustomAuthenticationFailureHandler;
+import co.com.sbaqueroadev.contigo.security.CustomLoginSuccessHandler;
 import co.com.sbaqueroadev.contigo.security.JWTAuthenticationFilter;
 import co.com.sbaqueroadev.contigo.security.JWTAuthorizationFilter;
 
@@ -22,6 +24,10 @@ import co.com.sbaqueroadev.contigo.security.JWTAuthorizationFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private CustomAuthenticationFailureHandler authenticationFailureHandler = 
+			new CustomAuthenticationFailureHandler("/users/access?error=100");
+	private CustomLoginSuccessHandler authenticationSuccessHandler = 
+			new CustomLoginSuccessHandler("/board/home");
 
 	public WebSecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.userDetailsService = userDetailsService;
@@ -34,17 +40,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/users/access","/users/create","/error"
 				,"/resources/**","/webjars/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/users/sign-up").permitAll()
-		.antMatchers(HttpMethod.GET,"/class/**").hasAnyAuthority("TEACH_CLASS_PRIVILEGE",
-				"VIEW_CLASS_PRIVILEGE")
-		.antMatchers(HttpMethod.POST,"/class/**").hasAnyAuthority("TEACH_CLASS_PRIVILEGE",
-				"VIEW_CLASS_PRIVILEGE")
-		.anyRequest().hasAnyAuthority("READ_PRIVILEGE","WRITE_PRIVILEGE")
+		.antMatchers(HttpMethod.GET,"/class/**").hasAnyAuthority(Privileges.TEACH.getValue().getName(),
+				Privileges.CLASS_VIEWER.getValue().getName())
+		.antMatchers(HttpMethod.POST,"/class/**").hasAnyAuthority(Privileges.TEACH.getValue().getName(),
+				Privileges.CLASS_VIEWER.getValue().getName())
+		.anyRequest().hasAnyAuthority(Privileges.READ.getValue().getName(),
+				Privileges.WRITE.getValue().getName())
 		.and()
 		.formLogin()
 		.loginPage("/users/access")
+		.permitAll()
 		.loginProcessingUrl("/login")
+		.permitAll()
 		.and()
-		.addFilterAt(new JWTAuthenticationFilter(authenticationManager()),UsernamePasswordAuthenticationFilter.class)
+		.addFilter(new JWTAuthenticationFilter(authenticationManager()))//,UsernamePasswordAuthenticationFilter.class)
 		.addFilter(new JWTAuthorizationFilter(authenticationManager()))
 		// this disables session creation on Spring Security
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER);

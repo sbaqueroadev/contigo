@@ -25,6 +25,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,9 +37,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private AuthenticationManager authenticationManager;
+	private CustomAuthenticationFailureHandler authenticationFailureHandler = 
+			new CustomAuthenticationFailureHandler("/users/access?error=100");
+	private CustomLoginSuccessHandler authenticationSuccessHandler = 
+			new CustomLoginSuccessHandler("/board/home");
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
+		this.setAuthenticationFailureHandler(authenticationFailureHandler);
+		this.setAuthenticationSuccessHandler(authenticationSuccessHandler);
 	}
 
 	@Override
@@ -48,20 +55,25 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		//if(req.getParameter("username")==null || req.getParameter("password")==null)
 		//throw new RuntimeException();
 		//ApplicationUser creds;
+		UsernamePasswordAuthenticationToken user;
+		
+		
 		try {
-			creds = new ObjectMapper()
-					.readValue(req.getInputStream(), ApplicationUser.class);
-			return authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(
-							creds.getUsername(),
-							creds.getPassword())
-					);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+			creds = /*new ObjectMapper()
+					.readValue(req.getInputStream(), ApplicationUser.class);*/
+					new ApplicationUser();
+			creds.setPassword(req.getParameter("password"));
+			creds.setUsername(req.getParameter("username"));
+			user = new UsernamePasswordAuthenticationToken(
+					creds.getUsername(),
+					creds.getPassword());
+		} catch (NullPointerException e) {
+			user = new UsernamePasswordAuthenticationToken(null, null);
 		}
+		return authenticationManager.authenticate(user);
 		/*creds.setUsername(req.getParameter("username"));
 		creds.setPassword(req.getParameter("password"));*/
-		
+
 	}
 
 	@Override
@@ -88,6 +100,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		authcoo.setMaxAge((int) EXPIRATION_TIME);
 		res.addCookie(authcoo);
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		chain.doFilter(req, res);
+		super.getSuccessHandler().onAuthenticationSuccess(req, res, auth);
+		//chain.doFilter(req, res);
 	}
+
 }
