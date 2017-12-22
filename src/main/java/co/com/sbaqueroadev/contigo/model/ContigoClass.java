@@ -17,6 +17,7 @@ package co.com.sbaqueroadev.contigo.model;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
@@ -27,7 +28,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class ContigoClass {
 	
 	public static enum Status{
-		ACTIVE("active");
+		ACTIVE("active"), ASKED("asked");
 		
 		private String name;
 
@@ -42,12 +43,13 @@ public class ContigoClass {
 	
 	@Id
 	private String id;
-	
-	private String subject;
+	@DBRef
+	private Subject subject;
 	private Date date;
 	private int duration;
 	private String status;
-	private String teacherId;
+	@DBRef
+	private Teacher teacher;
 	
 	public ContigoClass() {
 		super();
@@ -61,11 +63,11 @@ public class ContigoClass {
 		this.id = id;
 	}
 
-	public String getSubject() {
+	public Subject getSubject() {
 		return subject;
 	}
 
-	public void setSubject(String subject) {
+	public void setSubject(Subject subject) {
 		this.subject = subject;
 	}
 
@@ -93,12 +95,12 @@ public class ContigoClass {
 		this.status = status;
 	}
 
-	public String getTeacherId() {
-		return teacherId;
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public void setTeacherId(String teacherId) {
-		this.teacherId = teacherId;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 	
 	

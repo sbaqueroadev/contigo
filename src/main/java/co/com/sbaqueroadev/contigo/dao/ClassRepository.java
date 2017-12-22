@@ -14,11 +14,13 @@
 	
 package co.com.sbaqueroadev.contigo.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.Subject;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
@@ -32,5 +34,5 @@ public interface ClassRepository extends MongoRepository<ContigoClass, String>{
 	 * @param subject
 	 * @return
 	 */
-	public ContigoClass findBySubject(String subject);
+	public List<ContigoClass> findBySubject(Subject subject);
 }
