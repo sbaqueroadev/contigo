@@ -57,7 +57,7 @@ public class BoardController {
 			if(teacherService.getCurrentClass(teacher)!=null){
 				mv.addObject("classId", teacherService.getCurrentClass(teacher).getId());
 			}else{
-				mv = new ModelAndView("redirect:/class/home");
+				mv = new ModelAndView("redirect:/teacher/home");
 			}
 		}else {
 			if( isStudent(authorities) ){
@@ -67,7 +67,7 @@ public class BoardController {
 				if(studentService.getCurrentClass(student)!=null){
 					mv.addObject("classId", studentService.getCurrentClass(student).getId());
 				}else{
-					mv = new ModelAndView("redirect:/class/home");
+					mv = new ModelAndView("redirect:/student/home");
 				}
 			}
 		}
