@@ -14,9 +14,11 @@
 	
 package co.com.sbaqueroadev.contigo.services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
@@ -24,6 +26,7 @@ import co.com.sbaqueroadev.contigo.dao.TeacherRepository;
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.TeacherInterface;
+import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
@@ -58,7 +61,8 @@ private TeacherRepository teacherRepository;
 	public ContigoClass getCurrentClass(Teacher teacher) {
 		ContigoClass currentClass = null;
 		Date now = new Date();
-		for(String id:teacher.getClasses()){
+		for(ContigoClass c:teacher.getClasses()){
+			String id = c.getId();
 			ContigoClass cClass = classRepository.findById(id).get();
 			Date from = new Date(cClass.getDate().getTime());
 			Date to = new Date(cClass.getDate().getTime());
@@ -77,6 +81,15 @@ private TeacherRepository teacherRepository;
 	@Override
 	public Teacher save(Teacher teacher) {
 		return teacherRepository.save(teacher);		
+	}
+
+	public boolean isTeacher(Collection<GrantedAuthority> authorities) {
+		for(GrantedAuthority a : authorities){
+			if(a.getAuthority().equals(Privileges.TEACH.getValue().getName())){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

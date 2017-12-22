@@ -14,9 +14,11 @@
 
 package co.com.sbaqueroadev.contigo.services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
@@ -24,7 +26,7 @@ import co.com.sbaqueroadev.contigo.dao.StudentRepository;
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.Student;
 import co.com.sbaqueroadev.contigo.model.StudentInterface;
-import co.com.sbaqueroadev.contigo.model.Teacher;
+import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
 
 /*
  * @author: gasdsba - sbaqueroa@gmail.com
@@ -59,7 +61,8 @@ public class StudentServiceImpl implements StudentInterface {
 	public ContigoClass getCurrentClass(Student student) {
 		ContigoClass currentClass = null;
 		Date now = new Date();
-		for(String id:student.getClasses()){
+		for(ContigoClass c:student.getClasses()){
+			String id = c.getId();
 			ContigoClass cClass = classRepository.findById(id).get();
 			Date from = new Date(cClass.getDate().getTime());
 			Date to = new Date(cClass.getDate().getTime());
@@ -78,6 +81,16 @@ public class StudentServiceImpl implements StudentInterface {
 	@Override
 	public Student save(Student student) {
 		return studentRepository.save(student);
+	}
+	
+	@Override
+	public boolean isStudent(Collection<GrantedAuthority> authorities) {
+		for(GrantedAuthority a : authorities){
+			if(a.getAuthority().equals(Privileges.CLASS_VIEWER.getValue().getName())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

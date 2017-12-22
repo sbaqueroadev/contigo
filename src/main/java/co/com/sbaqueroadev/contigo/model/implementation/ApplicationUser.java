@@ -2,6 +2,7 @@ package co.com.sbaqueroadev.contigo.model.implementation;
 
 import javax.persistence.Id;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="user")
@@ -11,6 +12,7 @@ public class ApplicationUser {
     private String username;
     private String password;
     private String email;
+    @DBRef
     private Role role;
 
     public String getId() {

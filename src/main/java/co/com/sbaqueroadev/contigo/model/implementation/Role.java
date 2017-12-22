@@ -15,31 +15,29 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
+import co.com.sbaqueroadev.contigo.model.implementation.Role.Roles;
 
 
 @Document(collection="role")
 public class Role {
 	
 	public static enum Roles{
-		ADMIN("ROLE_ADMIN",Arrays.asList(
-				Privileges.READ.getValue(), Privileges.WRITE.getValue(), Privileges.MANAGE_USERS.getValue())),
-		TEACHER("ROLE_TEACHER",Arrays.asList(
-				Privileges.READ.getValue(), Privileges.WRITE.getValue(), Privileges.TEACH.getValue())),
-		STUDENT("ROLE_STUDENT",Arrays.asList(
-				Privileges.READ.getValue(), Privileges.WRITE.getValue(), Privileges.CLASS_VIEWER.getValue())),
-		USER("ROLE_USER",Arrays.asList(Privileges.READ.getValue()));
+		ADMIN("ROLE_ADMIN"),
+		TEACHER("ROLE_TEACHER"),
+		STUDENT("ROLE_STUDENT"),
+		USER("ROLE_USER");
 		
-		public Role rol;
+		public String rol;
 		
-		Roles(String name,List<Privilege> privileges){
-			this.rol = new Role(name);
-			this.rol.setPrivileges(privileges);
+		Roles(String name){
+			this.rol = name;
 		}
 		
-		public Role getValue(){
+		public String getValue(){
 			return this.rol;
 		}
 		
@@ -50,8 +48,9 @@ public class Role {
 	@Id
 	private String id;
 	private String name;
+	@DBRef
 	private Collection<ApplicationUser> users;
-
+	@DBRef
 	private Collection<Privilege> privileges;
 
 	public String getId() {
@@ -59,12 +58,12 @@ public class Role {
 	}
 
 	/**
-	 * @param string
+	 * @param name
 	 * @param asList
 	 */
-	private void ADMIN(String string, List<Privilege> asList) {
-		// TODO Auto-generated method stub
-		
+	public Role(String name, List<Privilege> privileges) {
+		this.name = name;
+		this.privileges = privileges;
 	}
 
 	public void setId(String id) {

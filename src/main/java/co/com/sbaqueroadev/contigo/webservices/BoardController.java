@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,8 +42,8 @@ public class BoardController {
 		this.applicationUserService = applicationUserService;
 	}
 
-	@RequestMapping(value = "/board/home", method = RequestMethod.GET)
-	public ModelAndView init(){
+	@RequestMapping(value = "/board/home/{classId}", method = RequestMethod.GET)
+	public ModelAndView init(@PathVariable("classId") String id){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("panel");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -50,47 +51,37 @@ public class BoardController {
 				applicationUserService.findByUserName((String) authentication.getPrincipal());
 		Collection<GrantedAuthority> authorities = 
 				(Collection<GrantedAuthority>) authentication.getAuthorities();
-		if( isTeacher(authorities) ){
+		if( teacherService.isTeacher(authorities) ){
 			mv.addObject("role", "teacher");
 			Teacher teacher = teacherService.findByUserId(user.getId());
 			logger.debug(teacher.toString());
-			if(teacherService.getCurrentClass(teacher)!=null){
-				mv.addObject("classId", teacherService.getCurrentClass(teacher).getId());
+			if(id==null){
+				if(teacherService.getCurrentClass(teacher)!=null){
+					mv.addObject("classId", teacherService.getCurrentClass(teacher).getId());
+				}else{
+					mv = new ModelAndView("redirect:/teacher/home");
+				}
 			}else{
-				mv = new ModelAndView("redirect:/teacher/home");
+				mv.addObject("classId", id);
 			}
 		}else {
-			if( isStudent(authorities) ){
+			if( studentService.isStudent(authorities) ){
 				mv.addObject("role", "student");
 				Student student = studentService.findByUserId(user.getId());
 				logger.debug(student.toString());
-				if(studentService.getCurrentClass(student)!=null){
-					mv.addObject("classId", studentService.getCurrentClass(student).getId());
+				if(id==null){
+					if(studentService.getCurrentClass(student)!=null){
+						mv.addObject("classId", studentService.getCurrentClass(student).getId());
+					}else{
+						mv = new ModelAndView("redirect:/student/home");
+					}
 				}else{
-					mv = new ModelAndView("redirect:/student/home");
+					mv.addObject("classId", id);
 				}
 			}
 		}
 
 		return mv;
-	}
-
-	private boolean isStudent(Collection<GrantedAuthority> authorities) {
-		for(GrantedAuthority a : authorities){
-			if(a.getAuthority().equals(Privileges.CLASS_VIEWER.getValue().getName())){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean isTeacher(Collection<GrantedAuthority> authorities) {
-		for(GrantedAuthority a : authorities){
-			if(a.getAuthority().equals(Privileges.TEACH.getValue().getName())){
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@MessageMapping("/boardUpdate/{classId}")
