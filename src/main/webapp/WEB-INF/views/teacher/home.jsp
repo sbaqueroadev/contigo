@@ -75,6 +75,7 @@
 			</div>
 		</c:if>
 	</c:if>
+
 	<c:if test="${not empty currentClass}">
 		<p style="padding-top:20px;" class="col-md-12">
 			<br> <br> <br> <a class="col-md-12"

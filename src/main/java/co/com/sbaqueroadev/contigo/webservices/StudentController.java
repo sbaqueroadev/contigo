@@ -1,5 +1,6 @@
 package co.com.sbaqueroadev.contigo.webservices;
 
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;

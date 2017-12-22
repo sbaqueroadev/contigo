@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
@@ -44,6 +45,7 @@ public class TeacherController {
 			ContigoClass current = teacherService.getCurrentClass(teacher);
 			if(current!=null)
 				mv.addObject("currentClass", current);
+
 		}else{
 			if(studentService.isStudent(authorities)){
 				mv = new ModelAndView("redirect:/student/home");
