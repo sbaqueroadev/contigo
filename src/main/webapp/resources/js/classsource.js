@@ -15,7 +15,7 @@ canvas.height = window.innerHeight;
 classApp.controller('boardController',function($scope){
   $scope.stompClient = null;
   $scope.connect = function() {
-       $scope.socket = new SockJS('http://localhost:8081/Contigo/boardUpdate');
+       $scope.socket = new SockJS('../Contigo/boardUpdate');
         $scope.stompClient = Stomp.over($scope.socket);
         $scope.stompClient.connect({}, function (frame) {
             //setConnected(true);
@@ -155,7 +155,7 @@ classApp.controller('videoController',function($scope){
 
   $scope.pageReady = function () {
       $scope.uuid = $scope.uuidF();
-      $scope.sockjsVideo = new SockJS('http://localhost:8081/Contigo/show/');
+      $scope.sockjsVideo = new SockJS('../Contigo/show/');
       $scope.serverConnection = Stomp.over($scope.sockjsVideo);//new WebSocket('wss://' + window.location.hostname + ':8081');
       $scope.serverConnection.connect({}, function (frame) {
           //setConnected(true);
@@ -298,7 +298,7 @@ classApp.controller('chatController',function($scope){
   };
 
   $scope.connect = function() {
-      var socket = new SockJS('http://localhost:8081/Contigo/write/');
+      var socket = new SockJS('../Contigo/write/');
       $scope.stompClient = Stomp.over(socket);
       $scope.stompClient.connect({}, function (frame) {
           //setConnected(true);
