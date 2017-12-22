@@ -58,6 +58,9 @@
 	<c:if test="${not empty role}">
 		<script type="text/javascript">
   			var globalRole = '${role}';
+  			<c:if test="${not empty classId}">
+  			var classId = '${classId}';
+  			</c:if>
   		</script>
 	</c:if>
 	<script type="text/javascript" src="../webjars/jquery/3.2.1/jquery.js"></script>

@@ -2,29 +2,51 @@ package co.com.sbaqueroadev.contigo.model.implementation;
 
 import java.util.Collection;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
-@Entity
-@Table(name="privilege")
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="privilege")
 public class Privilege {
-  
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
- 
-    private String name;
- 
-    @ManyToMany(mappedBy = "privileges")
-    private Collection<Role> roles;
-    
-    
-    
-    public Privilege() {
+	
+	public static enum Privileges{
+		READ("READ_PRIVILEGE"),
+		WRITE("WRITE_PRIVILEGE"),
+		TEACH("TEACH_CLASS_PRIVILEGE"),
+		CLASS_VIEWER("VIEW_CLASS_PRIVILEGE"), 
+		MANAGE_USERS("MANAGE_USERS");
+		
+		private Privilege value;
+		
+		private Privileges(String value) {
+			this.value = new Privilege(value);
+		}
+
+		/**
+		 * @return
+		 */
+		public Privilege getValue() {
+			return this.value;
+		}
+	}
+
+	@Id
+	private String id;
+
+	private String name;
+	private Collection<Role> roles;
+
+
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Privilege() {
 		super();
 	}
 
@@ -47,6 +69,6 @@ public class Privilege {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
-    
-    
+
+
 }
