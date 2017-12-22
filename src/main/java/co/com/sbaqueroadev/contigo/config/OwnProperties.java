@@ -34,5 +34,5 @@ public class OwnProperties {
 			public void setHeroku(boolean heroku) {
 				this.heroku = heroku;
 			}
-			
+
 }
