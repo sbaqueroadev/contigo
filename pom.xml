@@ -27,7 +27,7 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<hibernate.version>4.1.9.Final</hibernate.version>
 		<mongodb.version>2.0.2.RELEASE</mongodb.version>
-		<start-class>co.com.sbaqueroa.contigo.ContigoApplication</start-class>
+		<start-class>co.com.sbaqueroadev.contigo.ContigoApplication</start-class>
 	</properties>
 
 	<dependencies>
