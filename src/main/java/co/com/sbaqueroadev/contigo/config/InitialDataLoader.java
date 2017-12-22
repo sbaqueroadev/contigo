@@ -3,7 +3,6 @@ package co.com.sbaqueroadev.contigo.config;
 
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +18,11 @@ import co.com.sbaqueroadev.contigo.dao.ClassRepository;
 import co.com.sbaqueroadev.contigo.dao.PrivilegeRepository;
 import co.com.sbaqueroadev.contigo.dao.RoleRepository;
 import co.com.sbaqueroadev.contigo.dao.StudentRepository;
+import co.com.sbaqueroadev.contigo.dao.SubjectRepository;
 import co.com.sbaqueroadev.contigo.dao.TeacherRepository;
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.Student;
+import co.com.sbaqueroadev.contigo.model.Subject;
 import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege;
@@ -55,6 +56,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	@Autowired
 	private StudentRepository studentRepository;
 
+	@Autowired
+	private SubjectRepository subjectRepository;
+
 	@Override
 	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -62,16 +66,16 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		if (alreadySetup)
 			return;
 		
-		createPrivilegeIfNotFound(Privileges.WRITE.getValue());
-		createPrivilegeIfNotFound(Privileges.READ.getValue());
-		createPrivilegeIfNotFound(Privileges.TEACH.getValue());
-		createPrivilegeIfNotFound(Privileges.CLASS_VIEWER.getValue());
-		createPrivilegeIfNotFound(Privileges.MANAGE_USERS.getValue());
+		Privilege write = createPrivilegeIfNotFound(Privileges.WRITE.getValue());
+		Privilege read = createPrivilegeIfNotFound(Privileges.READ.getValue());
+		Privilege teach = createPrivilegeIfNotFound(Privileges.TEACH.getValue());
+		Privilege classViewer = createPrivilegeIfNotFound(Privileges.CLASS_VIEWER.getValue());
+		Privilege manageUsers = createPrivilegeIfNotFound(Privileges.MANAGE_USERS.getValue());
 		
-		Role adminRole = createRoleIfNotFound(Roles.ADMIN.getValue());
-		Role userRole = createRoleIfNotFound(Roles.USER.getValue());
-		Role teacherRole = createRoleIfNotFound(Roles.TEACHER.getValue());
-		Role studentRole = createRoleIfNotFound(Roles.STUDENT.getValue());
+		Role adminRole = createRoleIfNotFound(new Role(Roles.ADMIN.getValue(),Arrays.asList(read, write, manageUsers)));
+		Role userRole = createRoleIfNotFound(new Role(Roles.USER.getValue(),Arrays.asList(read, write)));
+		Role teacherRole = createRoleIfNotFound(new Role(Roles.TEACHER.getValue(),Arrays.asList(read, write, teach)));
+		Role studentRole = createRoleIfNotFound(new Role(Roles.STUDENT.getValue(),Arrays.asList(read, write, classViewer)));
 		
 		ApplicationUser admin = new ApplicationUser();
 		admin.setPassword(bCryptPasswordEncoder.encode("admin"));
@@ -87,19 +91,31 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		user.setRole(teacherRole);
 		user = createUserIfNotFound(user);
 		
+		Subject subject = createSubjectIfNotFound(new Subject("Math"));
+		Subject subject2 = createSubjectIfNotFound(new Subject("Algebra"));
 		ContigoClass cClass = new ContigoClass();
 		cClass.setDate(new Date());
 		cClass.setDuration(4);
-		cClass.setSubject("Math");
+		cClass.setSubject(subject);
 		cClass.setStatus(ContigoClass.Status.ACTIVE.getName());
+		
+		ContigoClass cClass2 = new ContigoClass();
+		cClass2.setDate(new Date());
+		cClass2.setDuration(4);
+		cClass2.setSubject(subject2);
+		cClass2.setStatus(ContigoClass.Status.ASKED.getName());
 		
 		Teacher teacher = new Teacher();
 		teacher.setName("Camilo");
 		teacher.setUserId(user.getId());
+		teacher.addSubjectIfNotFound(subject);
 		teacher = createTeacherIfNotFound(teacher);
-		cClass.setTeacherId(teacher.getId());
+		cClass.setTeacher(teacher);
+		cClass2.setTeacher(teacher);
 		cClass = createClassIfNotFound(cClass);
-		teacher.addClass(cClass);
+		cClass2 = createClassIfNotFound(cClass2);
+		teacher.addClassIfNotFound(cClass);
+		teacher.addClassIfNotFound(cClass2);
 		teacherRepository.save(teacher);
 		
 		ApplicationUser user2 = new ApplicationUser();
@@ -115,6 +131,19 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		student.setUserId(user2.getId());
 		student = createStudentIfNotFound(student);
 		alreadySetup = true;
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	private Subject createSubjectIfNotFound(Subject subject) {
+		Subject sbj = subjectRepository.findByName(subject.getName());
+		if (sbj == null) {
+			sbj = subject;
+			subjectRepository.save(sbj);
+		}
+		return sbj;
 	}
 
 	/**
@@ -135,11 +164,10 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	 * @return
 	 */
 	private ContigoClass createClassIfNotFound(ContigoClass cClass) {
+		List<ContigoClass> classes = classRepository.findBySubject(cClass.getSubject());
 		ContigoClass cls = null;
-		if(cClass.getId()!=null){
-			//cls = classRepository.findById(cClass.getId()).get();
-			cls = classRepository.findBySubject(cClass.getSubject());
-		}
+		if(classes.size()>0)
+			cls = classes.get(0);
 		if (cls == null) {
 			cls = cClass;
 			classRepository.save(cls);

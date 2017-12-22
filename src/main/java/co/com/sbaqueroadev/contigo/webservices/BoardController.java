@@ -50,7 +50,7 @@ public class BoardController {
 				applicationUserService.findByUserName((String) authentication.getPrincipal());
 		Collection<GrantedAuthority> authorities = 
 				(Collection<GrantedAuthority>) authentication.getAuthorities();
-		if( isTeacher(authorities) ){
+		if( teacherService.isTeacher(authorities) ){
 			mv.addObject("role", "teacher");
 			Teacher teacher = teacherService.findByUserId(user.getId());
 			logger.debug(teacher.toString());
@@ -60,7 +60,7 @@ public class BoardController {
 				mv = new ModelAndView("redirect:/teacher/home");
 			}
 		}else {
-			if( isStudent(authorities) ){
+			if( studentService.isStudent(authorities) ){
 				mv.addObject("role", "student");
 				Student student = studentService.findByUserId(user.getId());
 				logger.debug(student.toString());
@@ -73,24 +73,6 @@ public class BoardController {
 		}
 
 		return mv;
-	}
-
-	private boolean isStudent(Collection<GrantedAuthority> authorities) {
-		for(GrantedAuthority a : authorities){
-			if(a.getAuthority().equals(Privileges.CLASS_VIEWER.getValue().getName())){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean isTeacher(Collection<GrantedAuthority> authorities) {
-		for(GrantedAuthority a : authorities){
-			if(a.getAuthority().equals(Privileges.TEACH.getValue().getName())){
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@MessageMapping("/boardUpdate/{classId}")
