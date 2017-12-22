@@ -72,4 +72,12 @@ public class StudentServiceImpl implements StudentInterface {
 		return currentClass;
 	}
 
+	/**
+	 * @param student
+	 */
+	@Override
+	public Student save(Student student) {
+		return studentRepository.save(student);
+	}
+
 }

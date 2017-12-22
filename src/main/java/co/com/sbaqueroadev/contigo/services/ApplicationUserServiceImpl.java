@@ -30,11 +30,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserInterface {
 	          ("There is an account with that username: " + applicationUser.getUsername());
 	    }
 	    ApplicationUser user = new ApplicationUser();
-	 
+	    user.setUsername(applicationUser.getUsername());
 	    user.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
 	    user.setEmail(applicationUser.getEmail());
 	 
-	    user.setRole(roleRepository.findByName("ROLE_USER"));
+	    user.setRole(applicationUser.getRole());
 	    return applicationUserRepository.save(user);
 	}
 

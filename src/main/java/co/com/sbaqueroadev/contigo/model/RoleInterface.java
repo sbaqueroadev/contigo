@@ -14,16 +14,12 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
+import co.com.sbaqueroadev.contigo.model.implementation.Role;
+
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * TeacherInterface:  
 */
-public interface StudentInterface {
-	public Student findByUserId(String userId);
-	public ContigoClass getCurrentClass(Student teacher);
-	/**
-	 * @param student
-	 * @return
-	 */
-	Student save(Student student);
+public interface RoleInterface {
+	public Role findByName(String name);
 }

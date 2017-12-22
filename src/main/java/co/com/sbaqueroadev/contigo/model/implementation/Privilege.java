@@ -8,6 +8,27 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="privilege")
 public class Privilege {
+	
+	public static enum Privileges{
+		READ("READ_PRIVILEGE"),
+		WRITE("WRITE_PRIVILEGE"),
+		TEACH("TEACH_CLASS_PRIVILEGE"),
+		CLASS_VIEWER("VIEW_CLASS_PRIVILEGE"), 
+		MANAGE_USERS("MANAGE_USERS");
+		
+		private Privilege value;
+		
+		private Privileges(String value) {
+			this.value = new Privilege(value);
+		}
+
+		/**
+		 * @return
+		 */
+		public Privilege getValue() {
+			return this.value;
+		}
+	}
 
 	@Id
 	private String id;

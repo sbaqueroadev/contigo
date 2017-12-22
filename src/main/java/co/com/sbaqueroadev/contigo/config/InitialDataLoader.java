@@ -25,7 +25,9 @@ import co.com.sbaqueroadev.contigo.model.Student;
 import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege;
+import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
 import co.com.sbaqueroadev.contigo.model.implementation.Role;
+import co.com.sbaqueroadev.contigo.model.implementation.Role.Roles;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -59,41 +61,38 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
 		if (alreadySetup)
 			return;
-		Privilege readPrivilege
-		= createPrivilegeIfNotFound("READ_PRIVILEGE");
-		Privilege writePrivilege
-		= createPrivilegeIfNotFound("WRITE_PRIVILEGE");
-		Privilege teachClassPrivilege
-		= createPrivilegeIfNotFound("TEACH_CLASS_PRIVILEGE");
-		Privilege viewClassPrivilege
-		= createPrivilegeIfNotFound("VIEW_CLASS_PRIVILEGE");
-
-		List<Privilege> adminPrivileges = Arrays.asList(
-				readPrivilege, writePrivilege);
-		List<Privilege> teacherPrivileges = Arrays.asList(
-				readPrivilege, writePrivilege, teachClassPrivilege);        
-		List<Privilege> studentPrivileges = Arrays.asList(
-				readPrivilege, writePrivilege, viewClassPrivilege);
-		createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-		createRoleIfNotFound("ROLE_TEACHER", teacherPrivileges);
-		createRoleIfNotFound("ROLE_STUDENT", studentPrivileges);
-		createRoleIfNotFound("ROLE_USER", (Collection<Privilege>) Arrays.asList(readPrivilege));
-
-		Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-		Role userRole = roleRepository.findByName("ROLE_USER");
-		Role teacherRole = roleRepository.findByName("ROLE_TEACHER");
-		Role studentRole = roleRepository.findByName("ROLE_STUDENT");
+		
+		createPrivilegeIfNotFound(Privileges.WRITE.getValue());
+		createPrivilegeIfNotFound(Privileges.READ.getValue());
+		createPrivilegeIfNotFound(Privileges.TEACH.getValue());
+		createPrivilegeIfNotFound(Privileges.CLASS_VIEWER.getValue());
+		createPrivilegeIfNotFound(Privileges.MANAGE_USERS.getValue());
+		
+		Role adminRole = createRoleIfNotFound(Roles.ADMIN.getValue());
+		Role userRole = createRoleIfNotFound(Roles.USER.getValue());
+		Role teacherRole = createRoleIfNotFound(Roles.TEACHER.getValue());
+		Role studentRole = createRoleIfNotFound(Roles.STUDENT.getValue());
+		
+		ApplicationUser admin = new ApplicationUser();
+		admin.setPassword(bCryptPasswordEncoder.encode("admin"));
+		admin.setUsername("admin");
+		admin.setEmail("admin@test.com");
+		admin.setRole(adminRole);
+		admin = createUserIfNotFound(admin);
+		
 		ApplicationUser user = new ApplicationUser();
 		user.setPassword(bCryptPasswordEncoder.encode("teacher"));
 		user.setUsername("teacher");
 		user.setEmail("teacher@test.com");
 		user.setRole(teacherRole);
 		user = createUserIfNotFound(user);
+		
 		ContigoClass cClass = new ContigoClass();
 		cClass.setDate(new Date());
 		cClass.setDuration(4);
 		cClass.setSubject("Math");
 		cClass.setStatus(ContigoClass.Status.ACTIVE.getName());
+		
 		Teacher teacher = new Teacher();
 		teacher.setName("Camilo");
 		teacher.setUserId(user.getId());
@@ -102,12 +101,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		cClass = createClassIfNotFound(cClass);
 		teacher.addClass(cClass);
 		teacherRepository.save(teacher);
+		
 		ApplicationUser user2 = new ApplicationUser();
 		user2.setPassword(bCryptPasswordEncoder.encode("student"));
 		user2.setUsername("student");
 		user2.setEmail("student@test.com");
 		user2.setRole(studentRole);
 		user2 = createUserIfNotFound(user2);
+		
 		Student student = new Student();
 		student.setName("Sergio");
 		student.addClass(cClass);
@@ -159,24 +160,23 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 	}
 
 	@Transactional
-	private Privilege createPrivilegeIfNotFound(String name) {
+	private Privilege createPrivilegeIfNotFound(Privilege priv) {
 
-		Privilege privilege = privilegeRepository.findByName(name);
+		Privilege privilege = privilegeRepository.findByName(priv.getName());
 		if (privilege == null) {
-			privilege = new Privilege(name);
+			privilege = new Privilege(priv.getName());
 			privilegeRepository.save(privilege);
 		}
 		return privilege;
 	}
 
 	@Transactional
-	private Role createRoleIfNotFound(
-			String name, Collection<Privilege> privileges) {
+	private Role createRoleIfNotFound(Role rol) {
 
-		Role role = roleRepository.findByName(name);
+		Role role = roleRepository.findByName(rol.getName());
 		if (role == null) {
-			role = new Role(name);
-			role.setPrivileges(privileges);
+			role = new Role(rol.getName());
+			role.setPrivileges(rol.getPrivileges());
 			roleRepository.save(role);
 		}
 		return role;

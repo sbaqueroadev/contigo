@@ -70,5 +70,13 @@ private TeacherRepository teacherRepository;
 		};
 		return currentClass;
 	}
+
+	/**
+	 * @param teacher
+	 */
+	@Override
+	public Teacher save(Teacher teacher) {
+		return teacherRepository.save(teacher);		
+	}
 	
 }

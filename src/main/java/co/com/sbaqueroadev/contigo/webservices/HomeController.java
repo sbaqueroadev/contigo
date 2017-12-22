@@ -22,7 +22,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String init() {
 		logger.info("Getting home view");
-		return "redirect:home/";
+		return "redirect:/class/home";
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/home/", method = RequestMethod.GET)
 	public String home() {
-		return "home/home";
+		return "classtest";
 	}
 
 }

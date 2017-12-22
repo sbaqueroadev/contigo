@@ -21,4 +21,9 @@ package co.com.sbaqueroadev.contigo.model;
 public interface TeacherInterface {
 	public Teacher findByUserId(String userId);
 	public ContigoClass getCurrentClass(Teacher teacher);
+	/**
+	 * @param teacher
+	 * @return
+	 */
+	public Teacher save(Teacher teacher);
 }

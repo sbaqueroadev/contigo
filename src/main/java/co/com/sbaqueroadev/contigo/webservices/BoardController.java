@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import co.com.sbaqueroadev.contigo.model.Student;
 import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
+import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
 import co.com.sbaqueroadev.contigo.services.ApplicationUserServiceImpl;
 import co.com.sbaqueroadev.contigo.services.StudentServiceImpl;
 import co.com.sbaqueroadev.contigo.services.TeacherServiceImpl;
@@ -45,7 +47,7 @@ public class BoardController {
 		mv.setViewName("panel");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		ApplicationUser user = 
-				applicationUserService.findByUserName((String)authentication.getPrincipal());
+				applicationUserService.findByUserName((String) authentication.getPrincipal());
 		Collection<GrantedAuthority> authorities = 
 				(Collection<GrantedAuthority>) authentication.getAuthorities();
 		if( isTeacher(authorities) ){
@@ -54,6 +56,8 @@ public class BoardController {
 			logger.debug(teacher.toString());
 			if(teacherService.getCurrentClass(teacher)!=null){
 				mv.addObject("classId", teacherService.getCurrentClass(teacher).getId());
+			}else{
+				mv = new ModelAndView("redirect:/class/home");
 			}
 		}else {
 			if( isStudent(authorities) ){
@@ -62,6 +66,8 @@ public class BoardController {
 				logger.debug(student.toString());
 				if(studentService.getCurrentClass(student)!=null){
 					mv.addObject("classId", studentService.getCurrentClass(student).getId());
+				}else{
+					mv = new ModelAndView("redirect:/class/home");
 				}
 			}
 		}
@@ -71,7 +77,7 @@ public class BoardController {
 
 	private boolean isStudent(Collection<GrantedAuthority> authorities) {
 		for(GrantedAuthority a : authorities){
-			if(a.getAuthority().equals("VIEW_CLASS_PRIVILEGE")){
+			if(a.getAuthority().equals(Privileges.CLASS_VIEWER.getValue().getName())){
 				return true;
 			}
 		}
@@ -80,7 +86,7 @@ public class BoardController {
 
 	private boolean isTeacher(Collection<GrantedAuthority> authorities) {
 		for(GrantedAuthority a : authorities){
-			if(a.getAuthority().equals("TEACH_CLASS_PRIVILEGE")){
+			if(a.getAuthority().equals(Privileges.TEACH.getValue().getName())){
 				return true;
 			}
 		}
