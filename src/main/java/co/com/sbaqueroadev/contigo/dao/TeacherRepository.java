@@ -24,4 +24,5 @@ import co.com.sbaqueroadev.contigo.model.Teacher;
 */
 public interface TeacherRepository extends MongoRepository<Teacher, String>{
 	public Teacher findByUserId(String userId);
+	public Teacher save(Teacher teacher);
 }

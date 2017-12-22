@@ -45,6 +45,8 @@ public class Role {
 		
 	}
 
+	public static final String PREFIX = "ROLE_";
+
 	@Id
 	private String id;
 	private String name;

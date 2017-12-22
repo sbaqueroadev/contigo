@@ -47,7 +47,7 @@ public class BoardController {
 		mv.setViewName("panel");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		ApplicationUser user = 
-				applicationUserService.findByUserName(((User)authentication.getPrincipal()).getUsername());
+				applicationUserService.findByUserName((String) authentication.getPrincipal());
 		Collection<GrantedAuthority> authorities = 
 				(Collection<GrantedAuthority>) authentication.getAuthorities();
 		if( isTeacher(authorities) ){

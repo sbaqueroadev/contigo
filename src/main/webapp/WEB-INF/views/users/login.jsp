@@ -19,11 +19,13 @@
 		</div>
 		<div class="form-group">
 			<label for="password"> Contrase&ntilde;a: </label>
-			<input id="password" type="text" class="form-control"
+			<input id="password" type="password" class="form-control"
 				ng-model="user.password" name="password" />
 		</div>
 		<input class="col-md-offset-3 col-md-6 btn btn-success" type="submit" value="Ingresar">
-		
+		<div class="row"> 
+			<a class="col-md-offset-3 col-md-6" href="../users/create" >¿Nuevo usuario?</a>
+		</div>
 	</form>
 	<script type="text/javascript" src="../webjars/jquery/3.2.1/jquery.js"></script>
 	<script type="text/javascript"
