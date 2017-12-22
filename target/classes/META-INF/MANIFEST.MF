@@ -7,5 +7,5 @@ Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/spring-boot-
  starter-parent/contigo/
 Created-By: Maven Integration for Eclipse
-Main-Class: co.com.sbaqueroa.contigo.ContigoApplication
+Main-Class: co.com.sbaqueroadev.contigo.ContigoApplication
 
