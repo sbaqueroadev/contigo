@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
@@ -31,7 +32,10 @@ public class Teacher {
 	private String id;
 	private String name;
 	private String userId;
-	private List<String> classes = new ArrayList<>();
+	@DBRef
+	private List<ContigoClass> classes = new ArrayList<>();
+	@DBRef
+	private List<Subject> subjects = new ArrayList<>();
 	
 	public Teacher() {
 		super();
@@ -43,10 +47,10 @@ public class Teacher {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public List<String> getClasses() {
+	public List<ContigoClass> getClasses() {
 		return classes;
 	}
-	public void setClasses(List<String> classes) {
+	public void setClasses(List<ContigoClass> classes) {
 		this.classes = classes;
 	}
 	public String getName() {
@@ -64,6 +68,14 @@ public class Teacher {
 		this.userId = userId;
 	}
 	
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
 	public String toString(){
 		return "[Teacher: { id: "+this.id+", name: "+this.name
 				+", classes: "+this.classes.size()+"}]";
@@ -73,10 +85,29 @@ public class Teacher {
 	/**
 	 * @param cClass
 	 */
-	public void addClass(ContigoClass cClass) {
-		if(!this.getClasses().contains(cClass.getId())){
-			this.classes.add(cClass.getId());
+	public void addClassIfNotFound(ContigoClass cClass) {
+		if(this.getClasses().size()>0){
+			for(ContigoClass cls:this.getClasses()){
+				if(cls.getId().equals(cClass.getId())){
+					return;
+				}
+			}
 		}
+	this.classes.add(cClass);
+	}
+	
+	/**
+	 * @param subject
+	 */
+	public void addSubjectIfNotFound(Subject subject) {
+		if(this.getSubjects().size()>0){
+			for(Subject sbj:this.getSubjects()){
+				if(sbj.getId().equals(subject.getId())){
+					return;
+				}
+			}
+		}
+	this.subjects.add(subject);
 	}
 	
 }

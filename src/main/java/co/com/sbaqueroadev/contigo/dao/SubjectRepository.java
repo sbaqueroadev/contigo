@@ -1,6 +1,6 @@
 
-/* Archivo: TeacherRepository.java
-* Fecha: 21/12/2017
+/* Archivo: SubjectRepository.java
+* Fecha: 22/12/2017
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
 * Su uso, alteracion, reproduccion o modificacion sin la debida
@@ -14,17 +14,28 @@
 	
 package co.com.sbaqueroadev.contigo.dao;
 
+import java.util.Optional;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import co.com.sbaqueroadev.contigo.model.Teacher;
+import co.com.sbaqueroadev.contigo.model.Subject;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
-* TeacherRepository:  
+* SubjectRepository:  
 */
-public interface TeacherRepository extends MongoRepository<Teacher, String>{
-	
-	public Teacher findByUserId(String userId);
-	public Teacher save(Teacher teacher);
-	
+public interface SubjectRepository extends MongoRepository<Subject, String>{
+
+	/**
+	 * @param subjectId
+	 * @return
+	 */
+	public Optional<Subject> findById(String subjectId);
+	public Subject save( Subject subject );
+	/**
+	 * @param name
+	 * @return
+	 */
+	public Subject findByName(String name);	
+
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
@@ -31,7 +32,8 @@ public class Student {
 	private String id;
 	private String name;
 	private String userId;
-	private List<String> classes = new ArrayList<>();
+	@DBRef
+	private List<ContigoClass> classes = new ArrayList<>();
 	
 	public Student() {
 		super();
@@ -43,10 +45,10 @@ public class Student {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public List<String> getClasses() {
+	public List<ContigoClass> getClasses() {
 		return classes;
 	}
-	public void setClasses(List<String> classes) {
+	public void setClasses(List<ContigoClass> classes) {
 		this.classes = classes;
 	}
 	public String getName() {
@@ -75,7 +77,7 @@ public class Student {
 	 */
 	public void addClass(ContigoClass cClass) {
 		if(!this.getClasses().contains(cClass.getId())){
-			this.classes.add(cClass.getId());
+			this.classes.add(cClass);
 		}
 	}
 	

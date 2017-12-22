@@ -1,6 +1,6 @@
 
-/* Archivo: TeacherInterface.java
-* Fecha: 21/12/2017
+/* Archivo: Subject.java
+* Fecha: 22/12/2017
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
 * Su uso, alteracion, reproduccion o modificacion sin la debida
@@ -14,25 +14,44 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
-* TeacherInterface:  
+* Subject:  
 */
-public interface StudentInterface {
-	public Student findByUserId(String userId);
-	public ContigoClass getCurrentClass(Student teacher);
-	/**
-	 * @param student
-	 * @return
-	 */
-	Student save(Student student);
-	/**
-	 * @param authorities
-	 * @return
-	 */
-	boolean isStudent(Collection<GrantedAuthority> authorities);
+@Document(collection = "subject")
+public class Subject {
+
+	@Id
+	private String id;
+	private String name;
+	
+	public Subject() {
+		super();
+	}
+
+	public Subject(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
 }

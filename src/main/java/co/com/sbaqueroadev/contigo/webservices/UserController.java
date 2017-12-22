@@ -52,13 +52,13 @@ public class UserController {
 	 * @param string
 	 */
 	private void createPersonByRole(ApplicationUser user, String role) {
-		if(role.equals(Roles.STUDENT.getValue().getName())){
+		if(role.equals(Roles.STUDENT.getValue())){
 			Student student = new Student();
 			student.setName("Nombre");
 			student.setUserId(user.getId());
 			studentServiceImpl.save(student);
 		}else{
-			if(role.equals(Roles.TEACHER.getValue().getName())){
+			if(role.equals(Roles.TEACHER.getValue())){
 				Teacher teacher = new Teacher();
 				teacher.setName("NombreT");
 				teacher.setUserId(user.getId());

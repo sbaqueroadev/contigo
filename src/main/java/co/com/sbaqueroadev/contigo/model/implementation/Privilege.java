@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.persistence.Id;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="privilege")
@@ -34,6 +35,7 @@ public class Privilege {
 	private String id;
 
 	private String name;
+	@DBRef
 	private Collection<Role> roles;
 
 
