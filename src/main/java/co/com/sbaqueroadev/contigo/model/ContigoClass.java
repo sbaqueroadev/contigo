@@ -20,6 +20,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * ContigoClass:  
@@ -49,6 +51,7 @@ public class ContigoClass {
 	private int duration;
 	private String status;
 	@DBRef
+	@JsonBackReference
 	private Teacher teacher;
 	
 	public ContigoClass() {

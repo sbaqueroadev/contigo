@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
 import co.com.sbaqueroadev.contigo.dao.TeacherRepository;
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.Subject;
 import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.TeacherInterface;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
@@ -64,12 +65,14 @@ private TeacherRepository teacherRepository;
 		for(ContigoClass c:teacher.getClasses()){
 			String id = c.getId();
 			ContigoClass cClass = classRepository.findById(id).get();
-			Date from = new Date(cClass.getDate().getTime());
-			Date to = new Date(cClass.getDate().getTime());
-			to.setTime(cClass.getDate().getTime()+cClass.getDuration()*HOUR_IN_MILISECONDS);
-			if(from.before(now) && now.before(to)){
-					currentClass = cClass;
-					break;
+			if(cClass.getStatus().equals(ContigoClass.Status.ACTIVE.getName())){
+				Date from = new Date(cClass.getDate().getTime());
+				Date to = new Date(cClass.getDate().getTime());
+				to.setTime(cClass.getDate().getTime()+cClass.getDuration()*HOUR_IN_MILISECONDS);
+				if(from.before(now) && now.before(to)){
+						currentClass = cClass;
+						break;
+				}
 			}
 		};
 		return currentClass;
@@ -87,6 +90,38 @@ private TeacherRepository teacherRepository;
 		for(GrantedAuthority a : authorities){
 			if(a.getAuthority().equals(Privileges.TEACH.getValue().getName())){
 				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * @param teacher 
+	 * @param findById
+	 */
+	public boolean addSubject(Teacher teacher, Subject subject) {
+		if(subject!=null && teacher!=null){
+			if(teacher.addSubjectIfNotFound(subject)){
+				save(teacher);
+				return true;
+			}else{
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * @param teacher 
+	 * @param findById
+	 */
+	public boolean removeSubject(Teacher teacher, Subject subject) {
+		if(subject!=null && teacher!=null){
+			if(teacher.removeSubjectIfFound(subject)){
+				save(teacher);
+				return true;
+			}else{
+				return false;
 			}
 		}
 		return false;

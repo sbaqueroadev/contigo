@@ -69,13 +69,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		Privilege write = createPrivilegeIfNotFound(Privileges.WRITE.getValue());
 		Privilege read = createPrivilegeIfNotFound(Privileges.READ.getValue());
 		Privilege teach = createPrivilegeIfNotFound(Privileges.TEACH.getValue());
+		Privilege studentP = createPrivilegeIfNotFound(Privileges.STUDENT.getValue());
 		Privilege classViewer = createPrivilegeIfNotFound(Privileges.CLASS_VIEWER.getValue());
 		Privilege manageUsers = createPrivilegeIfNotFound(Privileges.MANAGE_USERS.getValue());
 		
 		Role adminRole = createRoleIfNotFound(new Role(Roles.ADMIN.getValue(),Arrays.asList(read, write, manageUsers)));
 		Role userRole = createRoleIfNotFound(new Role(Roles.USER.getValue(),Arrays.asList(read, write)));
 		Role teacherRole = createRoleIfNotFound(new Role(Roles.TEACHER.getValue(),Arrays.asList(read, write, teach)));
-		Role studentRole = createRoleIfNotFound(new Role(Roles.STUDENT.getValue(),Arrays.asList(read, write, classViewer)));
+		Role studentRole = createRoleIfNotFound(
+				new Role(Roles.STUDENT.getValue(),Arrays.asList(read, write, classViewer,studentP)));
 		
 		ApplicationUser admin = new ApplicationUser();
 		admin.setPassword(bCryptPasswordEncoder.encode("admin"));
@@ -91,8 +93,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		user.setRole(teacherRole);
 		user = createUserIfNotFound(user);
 		
-		Subject subject = createSubjectIfNotFound(new Subject("Math"));
-		Subject subject2 = createSubjectIfNotFound(new Subject("Algebra"));
+		Subject subject = createSubjectIfNotFound(new Subject("Matem&aacute;ticas"));
+		Subject subject2 = createSubjectIfNotFound(new Subject("F&iacute;sica"));
+		Subject subject3 = createSubjectIfNotFound(new Subject("Qu&iacute;mica"));
 		ContigoClass cClass = new ContigoClass();
 		cClass.setDate(new Date());
 		cClass.setDuration(4);

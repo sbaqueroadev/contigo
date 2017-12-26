@@ -21,6 +21,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * Teacher:  
@@ -33,6 +36,7 @@ public class Teacher {
 	private String name;
 	private String userId;
 	@DBRef
+	@JsonManagedReference
 	private List<ContigoClass> classes = new ArrayList<>();
 	@DBRef
 	private List<Subject> subjects = new ArrayList<>();
@@ -99,15 +103,37 @@ public class Teacher {
 	/**
 	 * @param subject
 	 */
-	public void addSubjectIfNotFound(Subject subject) {
+	public boolean addSubjectIfNotFound(Subject subject) {
 		if(this.getSubjects().size()>0){
 			for(Subject sbj:this.getSubjects()){
 				if(sbj.getId().equals(subject.getId())){
-					return;
+					return false;
 				}
 			}
 		}
 	this.subjects.add(subject);
+	return true;
+	}
+
+	/**
+	 * @param subject
+	 * @return
+	 */
+	public boolean removeSubjectIfFound(Subject subject) {
+		Subject found = null;
+		if(this.getSubjects().size()>0){
+			for(Subject sbj:this.getSubjects()){
+				if(sbj.getId().equals(subject.getId())){
+					found = sbj;
+					break;
+				}
+			}
+		}
+		if(found!=null){
+			this.getSubjects().remove(found);
+			return true;	
+		}
+		return false;
 	}
 	
 }

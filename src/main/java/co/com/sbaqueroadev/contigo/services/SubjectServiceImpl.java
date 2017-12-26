@@ -16,6 +16,8 @@ package co.com.sbaqueroadev.contigo.services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,7 +53,11 @@ public class SubjectServiceImpl implements SubjectInterface {
 	 */
 	@Override
 	public Subject findById(String subjectId) {
-		return subjectRepository.findById(subjectId).get();
+		try{
+			return subjectRepository.findById(subjectId).get();
+		}catch (NoSuchElementException e) {
+			return null;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -60,6 +66,13 @@ public class SubjectServiceImpl implements SubjectInterface {
 	@Override
 	public Subject save(Subject subject) {
 		return subjectRepository.save(subject);
+	}
+
+	/**
+	 * @return
+	 */
+	public List<Subject> findAll() {
+		return subjectRepository.findAll();
 	}
 
 }

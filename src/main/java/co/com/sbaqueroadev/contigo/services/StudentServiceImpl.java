@@ -64,12 +64,14 @@ public class StudentServiceImpl implements StudentInterface {
 		for(ContigoClass c:student.getClasses()){
 			String id = c.getId();
 			ContigoClass cClass = classRepository.findById(id).get();
-			Date from = new Date(cClass.getDate().getTime());
-			Date to = new Date(cClass.getDate().getTime());
-			to.setTime(cClass.getDate().getTime()+cClass.getDuration()*HOUR_IN_MILISECONDS);
-			if(from.before(now) && now.before(to)){
-				currentClass = cClass;
-				break;
+			if(cClass.getStatus().equals(ContigoClass.Status.ACTIVE.getName())){
+				Date from = new Date(cClass.getDate().getTime());
+				Date to = new Date(cClass.getDate().getTime());
+				to.setTime(cClass.getDate().getTime()+cClass.getDuration()*HOUR_IN_MILISECONDS);
+				if(from.before(now) && now.before(to)){
+					currentClass = cClass;
+					break;
+				}
 			}
 		};
 		return currentClass;
@@ -82,7 +84,7 @@ public class StudentServiceImpl implements StudentInterface {
 	public Student save(Student student) {
 		return studentRepository.save(student);
 	}
-	
+
 	@Override
 	public boolean isStudent(Collection<GrantedAuthority> authorities) {
 		for(GrantedAuthority a : authorities){
