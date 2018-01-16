@@ -14,9 +14,9 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
-import java.util.Collection;
+import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
+import co.com.sbaqueroadev.contigo.dto.ContigoClassDTO;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
@@ -29,4 +29,11 @@ public interface ContigoClassInterface {
 	 * @return
 	 */
 	ContigoClass save(ContigoClass cClass);
+	
+	/**
+	 * 
+	 * @param cClass
+	 * @return
+	 */
+	List<ContigoClass> findBySubject(ContigoClass cClass);
 }

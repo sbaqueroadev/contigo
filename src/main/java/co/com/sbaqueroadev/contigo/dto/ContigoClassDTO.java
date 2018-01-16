@@ -1,5 +1,5 @@
 
-/* Archivo: ContigoClass.java
+/* Archivo: ContigoClassDTO.java
 * Fecha: 21/12/2017
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
@@ -12,7 +12,7 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.dto;
 
 import java.util.Date;
 
@@ -26,8 +26,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 * @author: gasdsba - sbaqueroa@gmail.com
 * ContigoClass:  
 */
-@Document(collection = "cClass")
-public class ContigoClass {
+public class ContigoClassDTO {
 	
 	public static enum Status{
 		ACTIVE("active"), ASKED("asked");
@@ -43,19 +42,16 @@ public class ContigoClass {
 		}
 	}
 	
-	@Id
 	private String id;
-	//@DBRef
-	private Subject subject;
+	private SubjectDTO subject;
 	private Date date;
 	private int duration;
 	private String status;
 	private String topic;
-	//@DBRef
 	@JsonBackReference
-	private Teacher teacher;
+	private TeacherDTO teacher;
 	
-	public ContigoClass() {
+	public ContigoClassDTO() {
 		super();
 	}
 
@@ -67,11 +63,11 @@ public class ContigoClass {
 		this.id = id;
 	}
 
-	public Subject getSubject() {
+	public SubjectDTO getSubject() {
 		return subject;
 	}
 
-	public void setSubject(Subject subject) {
+	public void setSubject(SubjectDTO subject) {
 		this.subject = subject;
 	}
 
@@ -99,11 +95,11 @@ public class ContigoClass {
 		this.status = status;
 	}
 
-	public Teacher getTeacher() {
+	public TeacherDTO getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
+	public void setTeacher(TeacherDTO teacher) {
 		this.teacher = teacher;
 	}
 

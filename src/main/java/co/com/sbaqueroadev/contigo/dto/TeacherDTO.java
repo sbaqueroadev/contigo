@@ -1,5 +1,5 @@
 
-/* Archivo: Teacher.java
+/* Archivo: TeacherDTO.java
 * Fecha: 21/12/2017
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
@@ -12,7 +12,7 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,20 +28,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 * @author: gasdsba - sbaqueroa@gmail.com
 * Teacher:  
 */
-@Document(collection = "teacher")
-public class Teacher {
+public class TeacherDTO {
 	
-	@Id
 	private String id;
 	private String name;
 	private String userId;
-	//@DBRef
 	@JsonManagedReference
-	private List<ContigoClass> classes = new ArrayList<>();
-	//@DBRef
-	private List<Subject> subjects = new ArrayList<>();
+	private List<ContigoClassDTO> classes = new ArrayList<>();
+	private List<SubjectDTO> subjects = new ArrayList<>();
 	
-	public Teacher() {
+	public TeacherDTO() {
 		super();
 	}
 	
@@ -51,10 +47,10 @@ public class Teacher {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public List<ContigoClass> getClasses() {
+	public List<ContigoClassDTO> getClasses() {
 		return classes;
 	}
-	public void setClasses(List<ContigoClass> classes) {
+	public void setClasses(List<ContigoClassDTO> classes) {
 		this.classes = classes;
 	}
 	public String getName() {
@@ -72,11 +68,11 @@ public class Teacher {
 		this.userId = userId;
 	}
 	
-	public List<Subject> getSubjects() {
+	public List<SubjectDTO> getSubjects() {
 		return subjects;
 	}
 
-	public void setSubjects(List<Subject> subjects) {
+	public void setSubjects(List<SubjectDTO> subjects) {
 		this.subjects = subjects;
 	}
 
@@ -89,9 +85,9 @@ public class Teacher {
 	/**
 	 * @param cClass
 	 */
-	public void addClassIfNotFound(ContigoClass cClass) {
+	public void addClassIfNotFound(ContigoClassDTO cClass) {
 		if(this.getClasses().size()>0){
-			for(ContigoClass cls:this.getClasses()){
+			for(ContigoClassDTO cls:this.getClasses()){
 				if(cls.getId().equals(cClass.getId())){
 					return;
 				}
@@ -103,9 +99,9 @@ public class Teacher {
 	/**
 	 * @param subject
 	 */
-	public boolean addSubjectIfNotFound(Subject subject) {
+	public boolean addSubjectIfNotFound(SubjectDTO subject) {
 		if(this.getSubjects().size()>0){
-			for(Subject sbj:this.getSubjects()){
+			for(SubjectDTO sbj:this.getSubjects()){
 				if(sbj.getId().equals(subject.getId())){
 					return false;
 				}
@@ -119,10 +115,10 @@ public class Teacher {
 	 * @param subject
 	 * @return
 	 */
-	public boolean removeSubjectIfFound(Subject subject) {
-		Subject found = null;
+	public boolean removeSubjectIfFound(SubjectDTO subject) {
+		SubjectDTO found = null;
 		if(this.getSubjects().size()>0){
-			for(Subject sbj:this.getSubjects()){
+			for(SubjectDTO sbj:this.getSubjects()){
 				if(sbj.getId().equals(subject.getId())){
 					found = sbj;
 					break;

@@ -19,7 +19,7 @@ studentApp.controller("mainInfoCtrlr", ['$scope','$q','$http','$window',function
 		var deferred = $q.defer();
 		var data = $scope.selectedClass;
 		if(data!=null){
-			$http.post("../class/available/list",JSON.stringify(data))
+			$http.get("../class/available/list?subject="+data.subject.id)
 			.then(function complete(response){
 				if(response.data.type=="OK"){
 					$scope.availableClasses.push(response.data.data);
@@ -29,7 +29,7 @@ studentApp.controller("mainInfoCtrlr", ['$scope','$q','$http','$window',function
 				}
 			},
 			function error(response){
-				deferred.resolve({type:"error"});
+				deferred.resolve(response.data);
 			});
 		}else{
 			deferred.resolve({type:"error"});
