@@ -14,6 +14,36 @@ canvas.height = window.innerHeight;
 
 classApp.controller('boardController',function($scope){
   $scope.stompClient = null;
+  var pencilSubtools = [
+	  {
+		  name: "Color",
+	  	  type: "options",
+	  	  items: [{name:"Negro",value:'hsla(0, 0%, 0%, 1)'}
+	  	  		,{name:"Rojo",value:'hsla(360, 100%, 50%, 1)'}
+	  	  		,{name:"Azul",value:'hsla(235, 100%, 50%, 1)'}]
+	  },
+	  {
+		  name: "Tamaño",
+	  	  type: "range",
+	  	  items: [1,7]
+	  }
+  ]
+  $scope.tools = [
+	  {
+		  order: "pencil",
+		  name: "Lápiz",
+		  subtools : pencilSubtools
+	  },
+	  {
+		  order:'erase',
+		  name: "Borrador"
+	  },
+	  {
+		  order:'cartesian',
+		  name: "Cartesiano",
+		  subtools : pencilSubtools
+	  }
+  ]
   $scope.connect = function() {
        $scope.socket = new SockJS('../../boardUpdate');
         $scope.stompClient = Stomp.over($scope.socket);
@@ -68,8 +98,9 @@ classApp.controller('boardController',function($scope){
     $scope.isDrawing = false;
     $scope.lastX = 0;
     $scope.lastY = 0;
-    $scope.hue = 200;
-    $scope.lineWidth = 10;
+    //$scope.hue = 200;
+    $scope.hue = 'hsla(0, 0%, 0%, 1)';
+    $scope.lineWidth = 1;
     $scope.lightness = '50%';
     ctx.globalCompositeOperation = 'normal';
 
@@ -102,7 +133,7 @@ classApp.controller('boardController',function($scope){
 
 
     $scope.getColor = function() {
-      return 'hsl(' + $scope.hue +', 100%, '+$scope.lightness+')';
+      return /*'hsl(' +*/ $scope.hue /*+', 100%, '+$scope.lightness+')'*/;
     }
 
     $scope.getlineWidth = function() {
@@ -120,16 +151,28 @@ classApp.controller('boardController',function($scope){
     canvas.addEventListener('mouseout', () => $scope.isDrawing = false );
 
     $scope.connect();
+    $scope.selectSubTool = function(subTool){
+    	switch(subTool.name){
+    	case "Color":
+    	    $scope.hue = subTool.subtoolItemSelected.value;
+    		$scope.lightness = '50%';
+    		break;
+    	case "Tamaño":
+    		$scope.lineWidth = subTool.subtoolItemSelected;
+    		break;
+    	}
+    }
     $scope.selectTool = function(tool){
-        switch(tool){
+    	$scope.selectedTool = tool;
+        switch(tool.order){
             case 'pencil':
-                $scope.lineWidth = 5;
-                $scope.hue = 0;
-                $scope.lightness = '50%';
+               // $scope.lineWidth = 5;
+               // $scope.hue = 0;
+               // $scope.lightness = '50%';
             break;
             case 'erase':
                 $scope.lineWidth = 20;
-                $scope.lightness = '100%';
+                $scope.hue = 'hsla(0, 0%, 100%, 1)';
             break;
             case 'cartesian':
                 var car = new Cartesian(canvas,ctx);

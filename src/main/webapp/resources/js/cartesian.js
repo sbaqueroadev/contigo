@@ -15,8 +15,8 @@ Cartesian.prototype.divisionsSpace = 40;
 Cartesian.prototype.locate = function() {
 	this.aux.lineWidth = this.context.width;
 	this.aux.strokeStyle = this.context.color;
-	this.context.strokeStyle = 'hsla(0, 0%, 0%, 1)';
-    this.context.lineWidth = 2;
+	//this.context.strokeStyle = 'hsla(0, 0%, 0%, 1)';
+    //this.context.lineWidth = 2;
     this.selected = true;
 	var me = this;
     this.canvas.addEventListener("mouseup", function(event){

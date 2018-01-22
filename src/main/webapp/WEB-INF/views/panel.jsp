@@ -19,10 +19,18 @@
 	<!--BOARD-->
 	<canvas id="canvas"></canvas>
 	<div id="tools-div">
-		<div class="tool" ng-click="selectTool('pencil')">L&aacute;piz</div>
-		<div class="tool" ng-click="selectTool('erase')">Borrador</div>
-		<div class="tool" ng-click="selectTool('cartesian')">Cartesiano</div>
-		<div id="clear" class="tool" ng-click="selectTool('clear')">Borrar</div>
+		<div class="tool" ng-repeat='tool in tools' ng-click="selectTool(tool)">{{tool.name}}</div>
+		<div id="clear" class="tool" ng-click="selectTool({order:'clear'})">Borrar</div>
+	</div>
+	<div id="sub-tools-div">
+		<div class="sub-tool" ng-repeat='subtool in selectedTool.subtools' 
+		ng-click="selectSubTool(subtool)">{{subtool.name}}
+			<select ng-model="subtool.subtoolItemSelected" ng-if='subtool.type == "options"' 
+			ng-options="item.name for item in subtool.items"/>
+			<input ng-model="subtool.subtoolItemSelected" type="number" ng-if='subtool.type == "range"' min="{{subtool.items[0]}}"
+			 max = "{{subtool.items[1]}}"/>
+		</div>
+		
 	</div>
 	<!--CHAT-->
 	<div id="chat-section" ng-controller="chatController">
