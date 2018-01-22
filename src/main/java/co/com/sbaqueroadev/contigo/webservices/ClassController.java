@@ -1,5 +1,6 @@
 package co.com.sbaqueroadev.contigo.webservices;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -71,7 +72,7 @@ public class ClassController {
 			if(cClasses.size()>0){
 				return new JSONObject().put("type","OK")
 						.put("msg","Classes found")
-						.put("data",new JSONArray(cClasses)).toString();
+						.put("data",ContigoClass.toJSON(cClasses)).toString();
 			}else{
 				response.setStatus(HttpStatus.NOT_FOUND.value(), "No data");
 				return new JSONObject().put("type","error")

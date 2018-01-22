@@ -35,7 +35,25 @@
 				</div>
 				<button class="btn btn-success" value="A&ntilde;adir"
 					ng-click="lookForClass()">Solicitar</button>
+				<div class="col-md-6">
+					<h4>Clases disponibles</h4>
+					<table class="col-md-12">
+						<thead>
+							<tr>
+								<th>Fecha
+								<th>Tema
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="cClass in availableClasses">
+								<td>{{cClass.date | date:format:"dd-MM-yyyy" }}
+								<td>{{cClass.subject.name}}
+						</tbody>
+					</table>
+				</div>
 			</div>
+
+
 
 			<div class="col-md-6">
 				<h4>Clases próximas</h4>

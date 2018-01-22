@@ -19,10 +19,11 @@ studentApp.controller("mainInfoCtrlr", ['$scope','$q','$http','$window',function
 		var deferred = $q.defer();
 		var data = $scope.selectedClass;
 		if(data!=null){
+			$scope.availableClasses = [];
 			$http.get("../class/available/list?subject="+data.subject.id)
 			.then(function complete(response){
 				if(response.data.type=="OK"){
-					$scope.availableClasses.push(response.data.data);
+					$scope.availableClasses=response.data.data;//.push(response.data.data);
 					deferred.resolve(response.data);
 				}else{
 					deferred.resolve(response.data);

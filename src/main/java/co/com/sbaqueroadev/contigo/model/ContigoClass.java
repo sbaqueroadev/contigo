@@ -14,13 +14,18 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
+import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
@@ -113,6 +118,37 @@ public class ContigoClass {
 
 	public void setTopic(String topic) {
 		this.topic = topic;
+	}
+
+	/**
+	 * @param cClasses
+	 * @return
+	 */
+	public static JSONArray toJSON(List<ContigoClass> cClasses) {
+		JSONArray data = new JSONArray();
+		for(ContigoClass cC:cClasses){
+			data.put(cC.toJSON());
+		}
+		return data;
+	}
+
+	/**
+	 * @return
+	 */
+	private Object toJSON() {
+		String data = "";
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			data = objectMapper.writeValueAsString(this);
+			JSONObject jObject = new JSONObject(data);
+			return jObject;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new JSONObject();
+		
 	}
 	
 }
