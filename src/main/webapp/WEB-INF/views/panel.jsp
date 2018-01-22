@@ -21,6 +21,7 @@
 	<div id="tools-div">
 		<div class="tool" ng-click="selectTool('pencil')">L&aacute;piz</div>
 		<div class="tool" ng-click="selectTool('erase')">Borrador</div>
+		<div class="tool" ng-click="selectTool('cartesian')">Cartesiano</div>
 		<div id="clear" class="tool" ng-click="selectTool('clear')">Borrar</div>
 	</div>
 	<!--CHAT-->
@@ -72,6 +73,7 @@
 		src="../../webjars/angular/1.6.7-1/angular.js"></script>
 
 	<script src="../../resources/js/classsource.js" type="text/javascript"></script>
+	<script src="../../resources/js/cartesian.js" type="text/javascript"></script>
 
 
 </body>

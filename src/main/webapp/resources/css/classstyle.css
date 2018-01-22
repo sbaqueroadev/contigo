@@ -45,6 +45,7 @@ canvas {
 }
 
 #tools-div{
+	background-color:white;
     width:60px;
     height:100%;
     position:fixed;

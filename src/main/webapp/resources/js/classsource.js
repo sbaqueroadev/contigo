@@ -38,7 +38,9 @@ classApp.controller('boardController',function($scope){
                   ctx.clearRect(0, 0, canvas.width, canvas.height);
                 break;
                 case 'cartesian':
-
+                	var car = new Cartesian(canvas,ctx);
+                	car.zeroPosition = data.zeroPosition;
+                	car.draw();
                 break;
               }
               
@@ -118,7 +120,6 @@ classApp.controller('boardController',function($scope){
     canvas.addEventListener('mouseout', () => $scope.isDrawing = false );
 
     $scope.connect();
-
     $scope.selectTool = function(tool){
         switch(tool){
             case 'pencil':
@@ -129,6 +130,14 @@ classApp.controller('boardController',function($scope){
             case 'erase':
                 $scope.lineWidth = 20;
                 $scope.lightness = '100%';
+            break;
+            case 'cartesian':
+                var car = new Cartesian(canvas,ctx);
+                car.onDrawListener = function(cartesian){
+                	var dataURL = {type:'cartesian',zeroPosition:cartesian.zeroPosition};
+                	$scope.sendInfo(dataURL);
+                };
+                car.locate();
             break;
             case 'clear':
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
