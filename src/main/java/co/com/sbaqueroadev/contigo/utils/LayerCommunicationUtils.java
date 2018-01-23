@@ -1,6 +1,6 @@
 
-/* Archivo: TeacherInterface.java
-* Fecha: 21/12/2017
+/* Archivo: LayerCommunicationUtils.java
+* Fecha: 26/12/2017
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
 * Su uso, alteracion, reproduccion o modificacion sin la debida
@@ -12,28 +12,24 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.utils;
 
-import java.util.List;
-
-import co.com.sbaqueroadev.contigo.dto.ContigoClassDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
-* TeacherInterface:  
+* LayerCommunicationUtils:  
 */
-public interface ContigoClassInterface {
-	public ContigoClass findById(String id);
-	/**
-	 * @param cClass
-	 * @return
-	 */
-	ContigoClass save(ContigoClass cClass);
+public class LayerCommunicationUtils {
 	
-	/**
-	 * 
-	 * @param cClass
-	 * @return
-	 */
-	List<ContigoClass> findBySubject(ContigoClass cClass);
+	static public String mapAsJSONString(Object obj){
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

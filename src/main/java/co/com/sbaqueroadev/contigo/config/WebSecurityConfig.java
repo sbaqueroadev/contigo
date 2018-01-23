@@ -40,12 +40,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/users/access","/users/create","/error"
 				,"/resources/**","/webjars/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/users/sign-up").permitAll()
-		.antMatchers(HttpMethod.GET,"/class/**").hasAnyAuthority(Privileges.TEACH.getValue().getName(),
+		.antMatchers(HttpMethod.GET,"/class/**").hasAnyAuthority(
+				Privileges.TEACH.getValue().getName(),
 				Privileges.CLASS_VIEWER.getValue().getName())
-		.antMatchers(HttpMethod.POST,"/class/**").hasAnyAuthority(Privileges.TEACH.getValue().getName(),
+		.antMatchers(HttpMethod.POST,"/class/**").hasAnyAuthority(
+				Privileges.TEACH.getValue().getName(),
 				Privileges.CLASS_VIEWER.getValue().getName())
 		.anyRequest().hasAnyAuthority(Privileges.READ.getValue().getName(),
 				Privileges.WRITE.getValue().getName())
+		.antMatchers(HttpMethod.GET,"/teacher/**").hasAnyAuthority(
+				Privileges.TEACH.getValue().getName())
+		.antMatchers(HttpMethod.GET,"/student/**").hasAnyAuthority(
+				Privileges.STUDENT.getValue().getName())
 		.and()
 		.formLogin()
 		.loginPage("/users/access")

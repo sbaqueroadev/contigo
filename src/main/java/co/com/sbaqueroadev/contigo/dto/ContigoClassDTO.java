@@ -1,5 +1,5 @@
 
-/* Archivo: ContigoClass.java
+/* Archivo: ContigoClassDTO.java
 * Fecha: 21/12/2017
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
@@ -12,27 +12,21 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.dto;
 
-import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * ContigoClass:  
 */
-@Document(collection = "cClass")
-public class ContigoClass {
+public class ContigoClassDTO {
 	
 	public static enum Status{
 		ACTIVE("active"), ASKED("asked");
@@ -48,19 +42,16 @@ public class ContigoClass {
 		}
 	}
 	
-	@Id
 	private String id;
-	//@DBRef
-	private Subject subject;
+	private SubjectDTO subject;
 	private Date date;
 	private int duration;
 	private String status;
 	private String topic;
-	//@DBRef
 	@JsonBackReference
-	private Teacher teacher;
+	private TeacherDTO teacher;
 	
-	public ContigoClass() {
+	public ContigoClassDTO() {
 		super();
 	}
 
@@ -72,11 +63,11 @@ public class ContigoClass {
 		this.id = id;
 	}
 
-	public Subject getSubject() {
+	public SubjectDTO getSubject() {
 		return subject;
 	}
 
-	public void setSubject(Subject subject) {
+	public void setSubject(SubjectDTO subject) {
 		this.subject = subject;
 	}
 
@@ -104,11 +95,11 @@ public class ContigoClass {
 		this.status = status;
 	}
 
-	public Teacher getTeacher() {
+	public TeacherDTO getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
+	public void setTeacher(TeacherDTO teacher) {
 		this.teacher = teacher;
 	}
 
@@ -118,37 +109,6 @@ public class ContigoClass {
 
 	public void setTopic(String topic) {
 		this.topic = topic;
-	}
-
-	/**
-	 * @param cClasses
-	 * @return
-	 */
-	public static JSONArray toJSON(List<ContigoClass> cClasses) {
-		JSONArray data = new JSONArray();
-		for(ContigoClass cC:cClasses){
-			data.put(cC.toJSON());
-		}
-		return data;
-	}
-
-	/**
-	 * @return
-	 */
-	private Object toJSON() {
-		String data = "";
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			data = objectMapper.writeValueAsString(this);
-			JSONObject jObject = new JSONObject(data);
-			return jObject;
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return new JSONObject();
-		
 	}
 	
 }
