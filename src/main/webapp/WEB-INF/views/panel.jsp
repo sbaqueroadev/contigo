@@ -19,9 +19,30 @@
 	<!--BOARD-->
 	<canvas id="canvas"></canvas>
 	<div id="tools-div">
-		<div class="tool" ng-click="selectTool('pencil')">L&aacute;piz</div>
-		<div class="tool" ng-click="selectTool('erase')">Borrador</div>
-		<div id="clear" class="tool" ng-click="selectTool('clear')">Borrar</div>
+		<div class="tool" ng-repeat='tool in tools' ng-click="selectTool(tool)">
+			<img class="{{tool.state}}" src="../../resources/img/{{tool.src}}" width = "40" height = "auto" alt="{{tool.name}}"/>
+		</div>
+		<div id="clear" class="tool" ng-click="selectTool({order:'clear'})">
+			<img class="normal" src="../../resources/img/tool_trash.png" width = "40" height = "auto" 
+			alt="Borrar"/>
+		</div>
+	</div>
+	<div id="sub-tools-div">
+		<div class="sub-tool" ng-repeat='subtool in selectedTool.subtools' 
+		ng-click="selectSubTool(subtool)">
+			<div ng-if='subtool.name =="Color"'>
+				<div class="colorItem" ng-repeat='item in subtool.items' 
+				style='background-color:{{item.value}}' ng-click="subtool.subtoolItemSelected = item;">
+				</div>
+			</div>
+			<div ng-if='subtool.type == "range"'>
+				{{subtool.name}}
+				<input ng-model="subtool.subtoolItemSelected" type="range" min="{{subtool.items[0]}}"
+				 max = "{{subtool.items[1]}}" class="rangeSlider"/>
+			</div>
+			
+		</div>
+		
 	</div>
 	<!--CHAT-->
 	<div id="chat-section" ng-controller="chatController">
@@ -72,6 +93,7 @@
 		src="../../webjars/angular/1.6.7-1/angular.js"></script>
 
 	<script src="../../resources/js/classsource.js" type="text/javascript"></script>
+	<script src="../../resources/js/cartesian.js" type="text/javascript"></script>
 
 
 </body>

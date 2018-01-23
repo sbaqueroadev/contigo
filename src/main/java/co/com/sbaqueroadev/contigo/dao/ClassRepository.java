@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import co.com.sbaqueroadev.contigo.dto.SubjectDTO;
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.Subject;
 
@@ -29,6 +30,12 @@ import co.com.sbaqueroadev.contigo.model.Subject;
 public interface ClassRepository extends MongoRepository<ContigoClass, String>{
 
 	public Optional<ContigoClass> findById(String id);
+
+	/**
+	 * @param subject
+	 * @return
+	 */
+	public List<ContigoClass> findBySubject(SubjectDTO subject);
 
 	/**
 	 * @param subject

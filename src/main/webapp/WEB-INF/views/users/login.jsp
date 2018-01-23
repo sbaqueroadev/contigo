@@ -27,10 +27,10 @@
 			<a class="col-md-offset-3 col-md-6" href="../users/create" >¿Nuevo usuario?</a>
 		</div>
 	</form>
-	<script type="text/javascript" src="../webjars/jquery/3.2.1/jquery.js"></script>
+	<!-- <script type="text/javascript" src="../webjars/jquery/3.2.1/jquery.js"></script>
 	<script type="text/javascript"
 		src="../webjars/angular/1.6.7-1/angular.js"></script>
 
-	<script src="../resources/js/users/login.js" type="text/javascript"></script>
+	<script src="../resources/js/users/login.js" type="text/javascript"></script>-->
 </body>
 </html>

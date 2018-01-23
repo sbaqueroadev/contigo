@@ -14,10 +14,13 @@
 
 package co.com.sbaqueroadev.contigo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
+import co.com.sbaqueroadev.contigo.dto.ContigoClassDTO;
 import co.com.sbaqueroadev.contigo.model.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.ContigoClassInterface;
 
@@ -52,5 +55,15 @@ public class ContigoClassServiceImpl implements ContigoClassInterface {
 	public ContigoClass save(ContigoClass cClass) {
 		return classRepository.save(cClass);
 	}
+
+	/* (non-Javadoc)
+	 * @see co.com.sbaqueroadev.contigo.model.ContigoClassInterface#findBySubject(co.com.sbaqueroadev.contigo.model.ContigoClass)
+	 */
+	@Override
+	public List<ContigoClass> findBySubject(ContigoClass cClass) {
+		return classRepository.findBySubject(cClass.getSubject());
+	}
+	
+	
 	
 }

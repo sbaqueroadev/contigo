@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "contigo.heroku",
+  "type": "java.lang.String",
+  "description": "Set 'true' if running on heroku"
+}]}
