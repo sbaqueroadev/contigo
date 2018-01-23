@@ -19,16 +19,28 @@
 	<!--BOARD-->
 	<canvas id="canvas"></canvas>
 	<div id="tools-div">
-		<div class="tool" ng-repeat='tool in tools' ng-click="selectTool(tool)">{{tool.name}}</div>
-		<div id="clear" class="tool" ng-click="selectTool({order:'clear'})">Borrar</div>
+		<div class="tool" ng-repeat='tool in tools' ng-click="selectTool(tool)">
+			<img class="{{tool.state}}" src="../../resources/img/{{tool.src}}" width = "40" height = "auto" alt="{{tool.name}}"/>
+		</div>
+		<div id="clear" class="tool" ng-click="selectTool({order:'clear'})">
+			<img class="normal" src="../../resources/img/tool_trash.png" width = "40" height = "auto" 
+			alt="Borrar"/>
+		</div>
 	</div>
 	<div id="sub-tools-div">
 		<div class="sub-tool" ng-repeat='subtool in selectedTool.subtools' 
-		ng-click="selectSubTool(subtool)">{{subtool.name}}
-			<select ng-model="subtool.subtoolItemSelected" ng-if='subtool.type == "options"' 
-			ng-options="item.name for item in subtool.items"/>
-			<input ng-model="subtool.subtoolItemSelected" type="number" ng-if='subtool.type == "range"' min="{{subtool.items[0]}}"
-			 max = "{{subtool.items[1]}}"/>
+		ng-click="selectSubTool(subtool)">
+			<div ng-if='subtool.name =="Color"'>
+				<div class="colorItem" ng-repeat='item in subtool.items' 
+				style='background-color:{{item.value}}' ng-click="subtool.subtoolItemSelected = item;">
+				</div>
+			</div>
+			<div ng-if='subtool.type == "range"'>
+				{{subtool.name}}
+				<input ng-model="subtool.subtoolItemSelected" type="range" min="{{subtool.items[0]}}"
+				 max = "{{subtool.items[1]}}" class="rangeSlider"/>
+			</div>
+			
 		</div>
 		
 	</div>

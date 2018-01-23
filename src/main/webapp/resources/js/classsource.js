@@ -32,14 +32,20 @@ classApp.controller('boardController',function($scope){
 	  {
 		  order: "pencil",
 		  name: "Lápiz",
+		  src: "tool_pencil.png",
+		  state: "normal",
 		  subtools : pencilSubtools
 	  },
 	  {
 		  order:'erase',
+		  src: "tool_eraser.png",
+		  state: "normal",
 		  name: "Borrador"
 	  },
 	  {
 		  order:'cartesian',
+		  src: "tool_cartesian.png",
+		  state: "normal",
 		  name: "Cartesiano",
 		  subtools : pencilSubtools
 	  }
@@ -164,19 +170,34 @@ classApp.controller('boardController',function($scope){
     }
     $scope.selectTool = function(tool){
     	$scope.selectedTool = tool;
+    	$.each($scope.tools,function(index,item){
+    		item.state = 'normal';
+    	});
+    	tool.state = 'selected';
         switch(tool.order){
             case 'pencil':
                // $scope.lineWidth = 5;
                // $scope.hue = 0;
                // $scope.lightness = '50%';
+            	if($scope.hue =='hsla(0, 0%, 100%, 1)'){
+            		$scope.hue = 'hsla(0, 0%, 0%, 1)';
+            		$scope.lineWidth = 1;
+            	}
             break;
             case 'erase':
                 $scope.lineWidth = 20;
                 $scope.hue = 'hsla(0, 0%, 100%, 1)';
             break;
             case 'cartesian':
+            	if($scope.hue =='hsla(0, 0%, 100%, 1)'){
+            		$scope.hue = 'hsla(0, 0%, 0%, 1)';
+            		$scope.lineWidth = 1;
+            	}
                 var car = new Cartesian(canvas,ctx);
                 car.onDrawListener = function(cartesian){
+                	$.each($scope.tools,function(index,item){
+                		item.state = 'normal';
+                	});
                 	var dataURL = {type:'cartesian',zeroPosition:cartesian.zeroPosition};
                 	$scope.sendInfo(dataURL);
                 };
