@@ -19,27 +19,21 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import co.com.sbaqueroadev.contigo.dto.SubjectDTO;
-import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
-import co.com.sbaqueroadev.contigo.model.implementation.Subject;
+import co.com.sbaqueroadev.contigo.model.implementation.Space;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * ClassRepository:  
 */
-public interface ClassRepository extends MongoRepository<ContigoClass, String>{
+public interface SpaceRepository extends MongoRepository<Space, String>{
 
-	public Optional<ContigoClass> findById(String id);
-
-	/**
-	 * @param subject
-	 * @return
-	 */
-	public List<ContigoClass> findBySubject(SubjectDTO subject);
+	public Optional<Space> findById(String id);
 
 	/**
 	 * @param subject
 	 * @return
 	 */
-	public List<ContigoClass> findBySubject(Subject subject);
+	public List<Space> findByTeacher(Teacher teacher);
+
 }

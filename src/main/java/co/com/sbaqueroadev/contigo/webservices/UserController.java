@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import co.com.sbaqueroadev.contigo.exceptions.UsernameExistsException;
-import co.com.sbaqueroadev.contigo.model.Student;
-import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
 import co.com.sbaqueroadev.contigo.model.implementation.Role;
+import co.com.sbaqueroadev.contigo.model.implementation.Student;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.Role.Roles;
 import co.com.sbaqueroadev.contigo.services.ApplicationUserServiceImpl;
 import co.com.sbaqueroadev.contigo.services.RoleServiceImpl;

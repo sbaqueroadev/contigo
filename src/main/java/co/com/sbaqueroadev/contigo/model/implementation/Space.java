@@ -1,6 +1,6 @@
 
-/* Archivo: ContigoClass.java
-* Fecha: 21/12/2017
+/* Archivo: Space.java
+* Fecha: 14/02/2018
 * Todos los derechos de propiedad intelectual e industrial sobre esta
 * aplicacion son de propiedad exclusiva de Sergio Baquero Ariza
 * Su uso, alteracion, reproduccion o modificacion sin la debida
@@ -12,7 +12,7 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.model.implementation;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -29,10 +29,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
-* ContigoClass:  
+* Space:  
 */
-@Document(collection = "cClass")
-public class ContigoClass {
+@Document(collection = "space")
+public class Space {
 	
 	public static enum Status{
 		ACTIVE("active"), ASKED("asked");
@@ -51,16 +51,14 @@ public class ContigoClass {
 	@Id
 	private String id;
 	//@DBRef
-	private Subject subject;
 	private Date date;
 	private int duration;
 	private String status;
-	private String topic;
 	//@DBRef
 	@JsonBackReference
 	private Teacher teacher;
 	
-	public ContigoClass() {
+	public Space() {
 		super();
 	}
 
@@ -70,14 +68,6 @@ public class ContigoClass {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public Subject getSubject() {
-		return subject;
-	}
-
-	public void setSubject(Subject subject) {
-		this.subject = subject;
 	}
 
 	public Date getDate() {
@@ -112,22 +102,14 @@ public class ContigoClass {
 		this.teacher = teacher;
 	}
 
-	public String getTopic() {
-		return topic;
-	}
-
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
 	/**
-	 * @param cClasses
+	 * @param spaces
 	 * @return
 	 */
-	public static JSONArray toJSON(List<ContigoClass> cClasses) {
+	public static JSONArray toJSON(List<Space> spaces) {
 		JSONArray data = new JSONArray();
-		for(ContigoClass cC:cClasses){
-			data.put(cC.toJSON());
+		for(Space space:spaces){
+			data.put(space.toJSON());
 		}
 		return data;
 	}
@@ -150,5 +132,4 @@ public class ContigoClass {
 		return new JSONObject();
 		
 	}
-	
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import co.com.sbaqueroadev.contigo.model.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
 import co.com.sbaqueroadev.contigo.security.StudentSecurity;
 import co.com.sbaqueroadev.contigo.security.TeacherSecurity;
 import co.com.sbaqueroadev.contigo.services.ContigoClassServiceImpl;
@@ -72,7 +72,7 @@ public class ClassController {
 			if(cClasses.size()>0){
 				return new JSONObject().put("type","OK")
 						.put("msg","Classes found")
-						.put("data",ContigoClass.toJSON(cClasses)).toString();
+						.put("data",ContigoClass.toJSONL(cClasses)).toString();
 			}else{
 				response.setStatus(HttpStatus.NOT_FOUND.value(), "No data");
 				return new JSONObject().put("type","error")

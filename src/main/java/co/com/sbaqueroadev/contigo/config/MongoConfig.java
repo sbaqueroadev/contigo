@@ -44,7 +44,12 @@ public class MongoConfig extends AbstractMongoConfiguration {
 		}
 		
 		@Bean
-    public MongoTemplate mongoTemplate() throws Exception {
-        return new MongoTemplate(mongoClient(),getDatabaseName());
+    public MongoTemplate mongoTemplate(){
+      try{  
+      	return new MongoTemplate(mongoClient(),getDatabaseName());
+      }catch (Exception e) {
+				System.out.println("Error creando MongoTemplate\n"+e.getMessage());
+			}
+      return null;
     }
 }

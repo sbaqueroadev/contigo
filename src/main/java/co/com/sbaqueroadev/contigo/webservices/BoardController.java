@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import co.com.sbaqueroadev.contigo.model.Student;
-import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
+import co.com.sbaqueroadev.contigo.model.implementation.Student;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
 import co.com.sbaqueroadev.contigo.services.ApplicationUserServiceImpl;
 import co.com.sbaqueroadev.contigo.services.StudentServiceImpl;

@@ -14,19 +14,11 @@
 	
 package co.com.sbaqueroadev.contigo.dto;
 
-import java.util.Date;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * ContigoClass:  
 */
-public class ContigoClassDTO {
+public class ContigoClassDTO extends SpaceDTO{
 	
 	public static enum Status{
 		ACTIVE("active"), ASKED("asked");
@@ -42,25 +34,12 @@ public class ContigoClassDTO {
 		}
 	}
 	
-	private String id;
 	private SubjectDTO subject;
-	private Date date;
-	private int duration;
-	private String status;
 	private String topic;
-	@JsonBackReference
-	private TeacherDTO teacher;
+	private StudentDTO student;
 	
 	public ContigoClassDTO() {
 		super();
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public SubjectDTO getSubject() {
@@ -71,44 +50,20 @@ public class ContigoClassDTO {
 		this.subject = subject;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public int getDuration() {
-		return duration;
-	}
-
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public TeacherDTO getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(TeacherDTO teacher) {
-		this.teacher = teacher;
-	}
-
 	public String getTopic() {
 		return topic;
 	}
 
 	public void setTopic(String topic) {
 		this.topic = topic;
+	}
+
+	public StudentDTO getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentDTO student) {
+		this.student = student;
 	}
 	
 }

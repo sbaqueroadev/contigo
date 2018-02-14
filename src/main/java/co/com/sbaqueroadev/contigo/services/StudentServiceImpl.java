@@ -23,9 +23,9 @@ import org.springframework.stereotype.Service;
 
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
 import co.com.sbaqueroadev.contigo.dao.StudentRepository;
-import co.com.sbaqueroadev.contigo.model.ContigoClass;
-import co.com.sbaqueroadev.contigo.model.Student;
 import co.com.sbaqueroadev.contigo.model.StudentInterface;
+import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.implementation.Student;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
 
 /*

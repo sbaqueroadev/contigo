@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import co.com.sbaqueroadev.contigo.model.ContigoClass;
-import co.com.sbaqueroadev.contigo.model.Student;
-import co.com.sbaqueroadev.contigo.model.Subject;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
+import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.implementation.Student;
+import co.com.sbaqueroadev.contigo.model.implementation.Subject;
 import co.com.sbaqueroadev.contigo.security.StudentSecurity;
 import co.com.sbaqueroadev.contigo.security.TeacherSecurity;
 import co.com.sbaqueroadev.contigo.services.ApplicationUserServiceImpl;

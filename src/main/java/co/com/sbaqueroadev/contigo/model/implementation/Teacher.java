@@ -12,7 +12,7 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.model.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class Teacher {
 	private String userId;
 	//@DBRef
 	@JsonManagedReference
-	private List<ContigoClass> classes = new ArrayList<>();
+	private List<Space> spaces = new ArrayList<>();
 	//@DBRef
 	private List<Subject> subjects = new ArrayList<>();
 	
@@ -51,11 +51,11 @@ public class Teacher {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public List<ContigoClass> getClasses() {
-		return classes;
+	public List<Space> getSpaces() {
+		return spaces;
 	}
-	public void setClasses(List<ContigoClass> classes) {
-		this.classes = classes;
+	public void setSpaces(List<Space> classes) {
+		this.spaces = classes;
 	}
 	public String getName() {
 		return name;
@@ -82,7 +82,7 @@ public class Teacher {
 
 	public String toString(){
 		return "[Teacher: { id: "+this.id+", name: "+this.name
-				+", classes: "+this.classes.size()+"}]";
+				+", classes: "+this.spaces.size()+"}]";
 		
 	}
 
@@ -90,14 +90,14 @@ public class Teacher {
 	 * @param cClass
 	 */
 	public void addClassIfNotFound(ContigoClass cClass) {
-		if(this.getClasses().size()>0){
-			for(ContigoClass cls:this.getClasses()){
+		if(this.getSpaces().size()>0){
+			for(Space cls:this.getSpaces()){
 				if(cls.getId().equals(cClass.getId())){
 					return;
 				}
 			}
 		}
-	this.classes.add(cClass);
+	this.spaces.add(cClass);
 	}
 	
 	/**

@@ -17,6 +17,7 @@ package co.com.sbaqueroadev.contigo.model;
 import java.util.List;
 
 import co.com.sbaqueroadev.contigo.dto.ContigoClassDTO;
+import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com

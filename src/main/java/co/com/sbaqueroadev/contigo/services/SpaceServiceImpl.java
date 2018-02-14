@@ -20,50 +20,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
+import co.com.sbaqueroadev.contigo.dao.SpaceRepository;
 import co.com.sbaqueroadev.contigo.dto.ContigoClassDTO;
 import co.com.sbaqueroadev.contigo.model.ContigoClassInterface;
+import co.com.sbaqueroadev.contigo.model.SpaceInterface;
 import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.implementation.Space;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 
 /*
  * @author: gasdsba - sbaqueroa@gmail.com
  * TeacherServiceImpl:  
  */
 @Service
-public class ContigoClassServiceImpl implements ContigoClassInterface {
+public class SpaceServiceImpl implements SpaceInterface {
 
 	
 	@Autowired
-	private ClassRepository classRepository;
+	private SpaceRepository spaceRepository;
 
-	public ContigoClassServiceImpl() {
+	public SpaceServiceImpl() {
 		super();
 	}
 
 	/* (non-Javadoc)
-	 * @see co.com.sbaqueroadev.contigo.model.TeacherInterface#findByUsername(java.lang.String)
+	 * @see co.com.sbaqueroadev.contigo.model.SpaceInterface#findById(java.lang.String)
 	 */
 	@Override
-	public ContigoClass findById(String id) {
-		return classRepository.findById(id).get();
-	}
-
-	
-	/**
-	 * @param student
-	 */
-	@Override
-	public ContigoClass save(ContigoClass cClass) {
-		return classRepository.save(cClass);
+	public Space findById(String id) {
+		return spaceRepository.findById(id).get();
 	}
 
 	/* (non-Javadoc)
-	 * @see co.com.sbaqueroadev.contigo.model.ContigoClassInterface#findBySubject(co.com.sbaqueroadev.contigo.model.ContigoClass)
+	 * @see co.com.sbaqueroadev.contigo.model.SpaceInterface#save(co.com.sbaqueroadev.contigo.model.implementation.Space)
 	 */
 	@Override
-	public List<ContigoClass> findBySubject(ContigoClass cClass) {
-		return classRepository.findBySubject(cClass.getSubject());
+	public Space save(Space space) {
+		return spaceRepository.save(space);
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see co.com.sbaqueroadev.contigo.model.SpaceInterface#findByTeacher(co.com.sbaqueroadev.contigo.model.implementation.Teacher)
+	 */
+	@Override
+	public List<Space> findByTeacher(Teacher teacher) {
+		return spaceRepository.findByTeacher(teacher);
+	}
 	
 }

@@ -12,7 +12,7 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.model.implementation;
 
 import java.util.ArrayList;
 import java.util.List;

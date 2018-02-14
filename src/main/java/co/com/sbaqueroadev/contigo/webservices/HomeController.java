@@ -19,18 +19,10 @@ public class HomeController {
 	 * 
 	 * @return View represented by a JSP file.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String init() {
 		logger.info("Getting home view");
 		return "redirect:/teacher/home";
-	}
-	
-	/**
-	 * @return Home View represented by a JSP file.
-	 */
-	@RequestMapping(value = "/home/", method = RequestMethod.GET)
-	public String home() {
-		return "classtest";
 	}
 
 }

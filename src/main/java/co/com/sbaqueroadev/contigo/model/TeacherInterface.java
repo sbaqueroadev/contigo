@@ -14,6 +14,9 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
+import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
+
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * TeacherInterface:  

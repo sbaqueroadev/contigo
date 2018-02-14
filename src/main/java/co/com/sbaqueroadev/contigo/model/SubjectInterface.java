@@ -18,6 +18,8 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import co.com.sbaqueroadev.contigo.model.implementation.Subject;
+
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * TeacherInterface:  

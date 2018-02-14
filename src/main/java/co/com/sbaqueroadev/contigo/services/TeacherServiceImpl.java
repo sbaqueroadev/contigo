@@ -23,11 +23,12 @@ import org.springframework.stereotype.Service;
 
 import co.com.sbaqueroadev.contigo.dao.ClassRepository;
 import co.com.sbaqueroadev.contigo.dao.TeacherRepository;
-import co.com.sbaqueroadev.contigo.model.ContigoClass;
-import co.com.sbaqueroadev.contigo.model.Subject;
-import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.TeacherInterface;
+import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
 import co.com.sbaqueroadev.contigo.model.implementation.Privilege.Privileges;
+import co.com.sbaqueroadev.contigo.model.implementation.Space;
+import co.com.sbaqueroadev.contigo.model.implementation.Subject;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
@@ -62,7 +63,7 @@ private TeacherRepository teacherRepository;
 	public ContigoClass getCurrentClass(Teacher teacher) {
 		ContigoClass currentClass = null;
 		Date now = new Date();
-		for(ContigoClass c:teacher.getClasses()){
+		for(Space c:teacher.getSpaces()){
 			String id = c.getId();
 			ContigoClass cClass = classRepository.findById(id).get();
 			if(cClass.getStatus().equals(ContigoClass.Status.ACTIVE.getName())){

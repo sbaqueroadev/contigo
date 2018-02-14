@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import co.com.sbaqueroadev.contigo.model.Subject;
+import co.com.sbaqueroadev.contigo.model.implementation.Subject;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com

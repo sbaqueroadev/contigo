@@ -16,7 +16,7 @@ package co.com.sbaqueroadev.contigo.dao;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import co.com.sbaqueroadev.contigo.model.Teacher;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com

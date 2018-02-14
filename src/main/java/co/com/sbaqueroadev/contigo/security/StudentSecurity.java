@@ -22,9 +22,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import co.com.sbaqueroadev.contigo.model.Student;
-import co.com.sbaqueroadev.contigo.model.Teacher;
 import co.com.sbaqueroadev.contigo.model.implementation.ApplicationUser;
+import co.com.sbaqueroadev.contigo.model.implementation.Student;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 import co.com.sbaqueroadev.contigo.services.ApplicationUserServiceImpl;
 import co.com.sbaqueroadev.contigo.services.StudentServiceImpl;
 

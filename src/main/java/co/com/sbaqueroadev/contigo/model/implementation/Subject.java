@@ -12,7 +12,7 @@
 * previstas en la Ley.
 */
 	
-package co.com.sbaqueroadev.contigo.model;
+package co.com.sbaqueroadev.contigo.model.implementation;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

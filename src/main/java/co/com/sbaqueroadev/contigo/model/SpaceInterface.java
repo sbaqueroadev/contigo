@@ -14,28 +14,27 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
-import java.util.Collection;
+import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-
-import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
-import co.com.sbaqueroadev.contigo.model.implementation.Student;
+import co.com.sbaqueroadev.contigo.model.implementation.Space;
+import co.com.sbaqueroadev.contigo.model.implementation.Teacher;
 
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * TeacherInterface:  
 */
-public interface StudentInterface {
-	public Student findByUserId(String userId);
-	public ContigoClass getCurrentClass(Student teacher);
+public interface SpaceInterface {
+	public Space findById(String id);
 	/**
-	 * @param student
+	 * @param cClass
 	 * @return
 	 */
-	Student save(Student student);
+	public Space save(Space space);
+	
 	/**
-	 * @param authorities
+	 * 
+	 * @param cClass
 	 * @return
 	 */
-	boolean isStudent(Collection<GrantedAuthority> authorities);
+	public List<Space> findByTeacher(Teacher teacher);
 }
