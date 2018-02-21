@@ -21,6 +21,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /*
 * @author: gasdsba - sbaqueroa@gmail.com
 * Teacher:  
@@ -32,7 +34,8 @@ public class Student {
 	private String id;
 	private String name;
 	private String userId;
-	@DBRef
+	//@DBRef
+	@JsonBackReference
 	private List<ContigoClass> classes = new ArrayList<>();
 	
 	public Student() {

@@ -29,4 +29,9 @@ public interface TeacherInterface {
 	 * @return
 	 */
 	public Teacher save(Teacher teacher);
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Teacher findById(String id);
 }

@@ -14,9 +14,9 @@
 	
 package co.com.sbaqueroadev.contigo.model;
 
+import java.util.Date;
 import java.util.List;
 
-import co.com.sbaqueroadev.contigo.dto.ContigoClassDTO;
 import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
 
 /*
@@ -37,4 +37,11 @@ public interface ContigoClassInterface {
 	 * @return
 	 */
 	List<ContigoClass> findBySubject(ContigoClass cClass);
+	/**
+	 * @param cClass
+	 * @return
+	 */
+	List<ContigoClass> findByTeacherAndDate(ContigoClass cClass, Date date);
+	
+	List<ContigoClass> findByStudentAndDate(ContigoClass cClass, Date date);
 }

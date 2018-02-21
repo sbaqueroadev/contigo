@@ -14,10 +14,12 @@
 	
 package co.com.sbaqueroadev.contigo.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import co.com.sbaqueroadev.contigo.dto.SubjectDTO;
 import co.com.sbaqueroadev.contigo.model.implementation.ContigoClass;
@@ -42,4 +44,6 @@ public interface ClassRepository extends MongoRepository<ContigoClass, String>{
 	 * @return
 	 */
 	public List<ContigoClass> findBySubject(Subject subject);
+	
+	
 }

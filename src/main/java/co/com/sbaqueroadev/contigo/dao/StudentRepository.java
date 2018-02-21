@@ -14,6 +14,8 @@
 	
 package co.com.sbaqueroadev.contigo.dao;
 
+import java.util.Optional;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import co.com.sbaqueroadev.contigo.model.implementation.Student;
@@ -23,6 +25,8 @@ import co.com.sbaqueroadev.contigo.model.implementation.Student;
 * TeacherRepository:  
 */
 public interface StudentRepository extends MongoRepository<Student, String>{
+	
 	public Student findByUserId(String userId);
+	public Optional<Student> findById(String id);
 	public Student save(Student student);
 }

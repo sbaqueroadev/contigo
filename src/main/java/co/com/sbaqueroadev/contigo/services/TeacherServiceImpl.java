@@ -16,6 +16,7 @@ package co.com.sbaqueroadev.contigo.services;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -54,6 +55,18 @@ private TeacherRepository teacherRepository;
 	@Override
 	public Teacher findByUserId(String userId) {
 		return teacherRepository.findByUserId(userId);
+	}
+	
+	/* (non-Javadoc)
+	 * @see co.com.sbaqueroadev.contigo.model.SubjectInterface#findById(java.lang.String)
+	 */
+	@Override
+	public Teacher findById(String id) {
+		try{
+			return teacherRepository.findById(id).get();
+		}catch (NoSuchElementException e) {
+			return null;
+		}
 	}
 
 	/* (non-Javadoc)

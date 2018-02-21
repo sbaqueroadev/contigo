@@ -40,9 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/users/access","/users/create","/error"
 				,"/resources/**","/webjars/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/users/sign-up").permitAll()
-		.antMatchers(HttpMethod.GET,"/class/**").hasAnyAuthority(
+		.antMatchers(HttpMethod.GET,"/class/**")
+		.permitAll()
+		/*.hasAnyAuthority(
 				Privileges.TEACH.getValue().getName(),
-				Privileges.CLASS_VIEWER.getValue().getName())
+				Privileges.CLASS_VIEWER.getValue().getName())*/
 		.antMatchers(HttpMethod.POST,"/class/**").hasAnyAuthority(
 				Privileges.TEACH.getValue().getName(),
 				Privileges.CLASS_VIEWER.getValue().getName())

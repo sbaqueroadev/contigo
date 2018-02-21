@@ -53,6 +53,14 @@ public class StudentServiceImpl implements StudentInterface {
 	public Student findByUserId(String userId) {
 		return studentRepository.findByUserId(userId);
 	}
+	
+	/* (non-Javadoc)
+	 * @see co.com.sbaqueroadev.contigo.model.TeacherInterface#findByUsername(java.lang.String)
+	 */
+	@Override
+	public Student findById(String id) {
+		return studentRepository.findById(id).get();
+	}
 
 	/* (non-Javadoc)
 	 * @see co.com.sbaqueroadev.contigo.model.TeacherInterface#getCurrentClass()

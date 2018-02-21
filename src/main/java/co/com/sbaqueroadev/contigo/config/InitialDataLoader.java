@@ -134,6 +134,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		student.addClass(cClass2);
 		student.setUserId(user2.getId());
 		student = createStudentIfNotFound(student);
+		
+		cClass2.setStudent(student);
+		classRepository.save(cClass2);
 		alreadySetup = true;
 	}
 

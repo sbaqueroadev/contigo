@@ -27,6 +27,9 @@ import co.com.sbaqueroadev.contigo.model.implementation.Student;
 */
 public interface StudentInterface {
 	public Student findByUserId(String userId);
+	
+	public Student findById(String id);
+	
 	public ContigoClass getCurrentClass(Student teacher);
 	/**
 	 * @param student
